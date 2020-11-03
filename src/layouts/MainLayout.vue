@@ -46,10 +46,22 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksData = [
   {
+    title: "Home",
+    caption: "Landing page",
+    icon: "home",
+    link: "./#/"
+  },
+  {
+    title: "Catalogue",
+    caption: "See the complete library catalogue",
+    icon: "format_list_numbered",
+    link: "./#/catalogue"
+  },
+  {
     title: "Login",
     caption: "User / Admin login",
     icon: "login",
-    link: "./"
+    link: "./#/login"
   }
 ];
 
