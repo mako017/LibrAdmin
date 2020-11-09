@@ -104,12 +104,13 @@ export interface CategoryItem {
 
 #### UserAccount
 
-`UserAccount` represents the type of local user information. It must have a name and an access group. It can further have a list of reserved and borrowed media (referenced by their IDs)
+`UserAccount` represents the type of local user information. It must have a name, an access group, and a token. It can further have a list of reserved and borrowed media (referenced by their IDs)
 
 ```typescript
 export interface UserAccount {
   name: string;
   accessGroup: 0 | 1 | 2 | 3;
+  token: string;
   //0 = guest; 1 = registered user; 2 = staff; 3 = admin
   reservedMedia?: Array<string>;
   borrowedMedia?: Array<string>;
