@@ -12,7 +12,7 @@ const routes: RouteConfig[] = [
     path: "/login",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/Index.vue") }
+      { path: "", component: () => import("pages/UserLogin.vue") }
     ]
   },
   {
