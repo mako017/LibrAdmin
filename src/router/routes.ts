@@ -9,10 +9,10 @@ const routes: RouteConfig[] = [
     ]
   },
   {
-    path: "/login",
+    path: "/usercontrol",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/UserLogin.vue") }
+      { path: "", component: () => import("pages/UserControl.vue") }
     ]
   },
   {
@@ -22,7 +22,20 @@ const routes: RouteConfig[] = [
       { path: "", component: () => import("pages/Catalogue.vue") }
     ]
   },
-
+  {
+    path: "/qrscanner",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/QR.vue") }
+    ]
+  },
+  {
+    path: "/login",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/UserLogin.vue") }
+    ]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
