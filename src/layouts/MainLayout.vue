@@ -52,10 +52,22 @@ const linksData = [
     link: "./#/"
   },
   {
+    title: "User Administration",
+    caption: "Add, edit, and delete users",
+    icon: "group",
+    link: "./#/usercontrol"
+  },
+  {
     title: "Catalogue",
     caption: "See the complete library catalogue",
     icon: "format_list_numbered",
     link: "./#/catalogue"
+  },
+  {
+    title: "QR Scanner",
+    caption: "Scan the code inside you test",
+    icon: "qr_code_scanner",
+    link: "./#/qrscanner"
   },
   {
     title: "Login",
