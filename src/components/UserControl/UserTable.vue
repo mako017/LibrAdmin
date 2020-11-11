@@ -1,13 +1,12 @@
 <template>
-  <q-page class="col items-center root">
+  <div class="col">
     <q-table
       title="User Panel"
       :data="mockdata"
       :columns="columns"
       row-key="name"
-      class="usertable"
     ></q-table>
-  </q-page>
+  </div>
 </template>
 
 <script lang="ts">
@@ -73,12 +72,4 @@ export default class UserTable extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-.root {
-  width: 100%;
-}
-.usertable {
-  width: 100%;
-  max-width: 1000px;
-}
-</style>
+<style scoped lang="scss"></style>
