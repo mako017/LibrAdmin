@@ -1,6 +1,3 @@
-import { title } from "process";
-import { Interface } from "readline";
-
 export interface Todo {
   id: number;
   content: string;
