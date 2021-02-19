@@ -2,7 +2,6 @@
 
 class User{
     public $name = "";
-    public $password = "";
     public $role = "";
 
     public function __construct(string $name, string $role) {
@@ -22,7 +21,7 @@ class UserGateway{
 
     public function readAllUsers(){
         $users = [];
-        $result = DB::query("SELECT * FROM users");
+        $result = DB::query("SELECT * FROM `users`");
         foreach ($result as $row) {
             $users[] = new User($row["name"], $row["role"]);
         }
@@ -30,7 +29,7 @@ class UserGateway{
     }
 
     public function readSingleUser(string $userName){
-        $row = DB::queryFirstRow("SELECT * FROM users WHERE WHERE name=%s", $userName);
+        $row = DB::queryFirstRow("SELECT * FROM `users` WHERE `name`=%s", $userName);
         return new User($row["name"], $row["role"]);
     }
 
