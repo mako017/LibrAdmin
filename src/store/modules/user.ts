@@ -18,6 +18,12 @@ export default class User extends VuexModule {
   get name() {
     return this._name;
   }
+  get role() {
+    return this._role;
+  }
+  get isLoggedIn() {
+    return this._loggedIn;
+  }
 
   @Action
   loginUser(credentials: UserCredentials) {
