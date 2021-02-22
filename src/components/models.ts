@@ -16,7 +16,7 @@ export interface CatalogueItem {
   ID: string;
   title: string;
   authors: Array<string>;
-  status: 0|1|2;
+  status: 0 | 1 | 2;
   //0 = avail.; 1 = out of stock; 2 = due
   due?: Date;
   abstract?: string;
@@ -43,4 +43,20 @@ export interface UserAccount {
   //0 = guest; 1 = registered user; 2 = staff; 3 = admin
   reservedMedia?: Array<string>;
   borrowedMedia?: Array<string>;
+}
+
+export interface UserCredentials {
+  username: string;
+  password: string;
+  rememberMe: "true" | "false";
+}
+
+export interface serverResponse {
+  call: string;
+  payload: unknown;
+}
+
+export interface ServerResponseUser {
+  name: string;
+  role: string;
 }
