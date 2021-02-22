@@ -51,7 +51,7 @@ class Authenticator {
     {
         $userGate = new UserGateway();
         $user = $userGate->readSingleUser($this->userName);
-        var_dump($user);
+        serverResponse("login", $user);
     }
 
     public function login()
