@@ -43,40 +43,7 @@
 
 <script lang="ts">
 import EssentialLink from "components/EssentialLink.vue";
-
-const linksData = [
-  {
-    title: "Home",
-    caption: "Landing page",
-    icon: "home",
-    link: "./#/"
-  },
-  {
-    title: "User Administration",
-    caption: "Add, edit, and delete users",
-    icon: "group",
-    link: "./#/usercontrol"
-  },
-  {
-    title: "Catalogue",
-    caption: "See the complete library catalogue",
-    icon: "format_list_numbered",
-    link: "./#/catalogue"
-  },
-  {
-    title: "QR Scanner",
-    caption: "Scan the code inside you test",
-    icon: "qr_code_scanner",
-    link: "./#/qrscanner"
-  },
-  {
-    title: "Login",
-    caption: "User / Admin login",
-    icon: "login",
-    link: "./#/login"
-  }
-];
-
+import { user } from "src/store";
 import { Vue, Component } from "vue-property-decorator";
 
 @Component({
@@ -84,6 +51,39 @@ import { Vue, Component } from "vue-property-decorator";
 })
 export default class MainLayout extends Vue {
   leftDrawerOpen = false;
-  essentialLinks = linksData;
+  get essentialLinks() {
+    return [
+      {
+        title: "Home",
+        caption: "Landing page",
+        icon: "home",
+        link: "./#/"
+      },
+      {
+        title: "User Administration",
+        caption: "Add, edit, and delete users",
+        icon: "group",
+        link: "./#/usercontrol"
+      },
+      {
+        title: "Catalogue",
+        caption: "See the complete library catalogue",
+        icon: "format_list_numbered",
+        link: "./#/catalogue"
+      },
+      {
+        title: "QR Scanner",
+        caption: "Scan the code inside you test",
+        icon: "qr_code_scanner",
+        link: "./#/qrscanner"
+      },
+      {
+        title: user.isLoggedIn ? "My Account" : "Login",
+        caption: user.isLoggedIn ? "View Account Info" : "User / Admin login",
+        icon: user.isLoggedIn ? "account_box" : "login",
+        link: "./#/login"
+      }
+    ];
+  }
 }
 </script>
