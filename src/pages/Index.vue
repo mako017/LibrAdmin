@@ -1,39 +1,24 @@
 <template>
-  <q-page class="row items-center justify-evenly"> </q-page>
+  <q-page class="column q-pa-md">
+    <h4>Testothek der Universität des Saarlandes</h4>
+    <WideBlog />
+    <div class="row justify-center q-mb-sm q-mt-sm">
+      <NarrowBlog />
+      <NarrowBlog />
+    </div>
+  </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from "components/models";
 import { Vue, Component } from "vue-property-decorator";
+import WideBlog from "components/Home/WideBlog.vue";
+import NarrowBlog from "components/Home/NarrowBlog.vue";
 
 @Component({
-  components: {}
+  components: {
+    WideBlog,
+    NarrowBlog
+  }
 })
-export default class PageIndex extends Vue {
-  todos: Todo[] = [
-    {
-      id: 1,
-      content: "ct1"
-    },
-    {
-      id: 2,
-      content: "ct2"
-    },
-    {
-      id: 3,
-      content: "ct3"
-    },
-    {
-      id: 4,
-      content: "ct4"
-    },
-    {
-      id: 5,
-      content: "ct5"
-    }
-  ];
-  meta: Meta = {
-    totalCount: 1200
-  };
-}
+export default class PageIndex extends Vue {}
 </script>
