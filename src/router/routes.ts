@@ -26,6 +26,13 @@ const routes: RouteConfig[] = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/UserLogin.vue") }]
   },
+  {
+    path: "/account",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/AccountSettings.vue") }
+    ]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

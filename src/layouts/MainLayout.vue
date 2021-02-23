@@ -81,7 +81,7 @@ export default class MainLayout extends Vue {
         title: user.isLoggedIn ? "My Account" : "Login",
         caption: user.isLoggedIn ? "View Account Info" : "User / Admin login",
         icon: user.isLoggedIn ? "account_box" : "login",
-        link: "./#/login"
+        link: user.isLoggedIn ? "./#/account" : "./#/login"
       }
     ];
   }
