@@ -13,17 +13,20 @@ export interface Catalogue {
 }
 
 export interface CatalogueItem {
-  ID: string;
+  catalogueCounter?: number;
+  itemID: string;
+  abbreviation: string;
   title: string;
   authors: Array<string>;
   status: 0 | 1 | 2;
   //0 = avail.; 1 = out of stock; 2 = due
-  due?: Date;
+  currentlyWith?: string;
+  due?: string;
   abstract?: string;
-  category1?: Array<number>;
-  category2?: Array<number>;
-  category3?: Array<number>;
-  category4?: Array<number>;
+  category1?: Array<string>;
+  category2?: Array<string>;
+  category3?: Array<string>;
+  category4?: Array<string>;
   image?: string;
   publisher?: string;
   language?: string;
