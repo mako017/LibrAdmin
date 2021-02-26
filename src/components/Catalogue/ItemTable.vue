@@ -21,7 +21,7 @@ export default class ItemTable extends Vue {
       required: true,
       label: "Test ID",
       align: "left",
-      field: (row: CatalogueItem) => row.ID,
+      field: (row: CatalogueItem) => row.itemID,
       sortable: true
     },
     {
@@ -97,50 +97,53 @@ export default class ItemTable extends Vue {
       sortable: true
     }
   ];
-  mockdata = [
+  mockdata: CatalogueItem[] = [
     {
-      ID: "Int-01",
+      itemID: "Int-01",
+      abbreviation: "DESIGMA",
       title: "DESIGMA",
       authors: ["Nicolas Becker", "Frank M. Spinath"],
       status: 0,
       //0 = avail.; 1 = out of stock; 2 = due
       due: "",
       abstract: "",
-      category1: 1,
-      category2: 5,
-      category3: 3,
-      category4: 7,
+      category1: ["1"],
+      category2: ["5"],
+      category3: ["3"],
+      category4: ["7"],
       image: "string",
       publisher: "Hogrefe",
       language: "deutsch"
     },
     {
-      ID: "Auf-01",
+      itemID: "Auf-01",
+      abbreviation: "FAIR II",
       title: "FAIR II",
       authors: ["IDC"],
       status: 0,
       //0 = avail.; 1 = out of stock; 2 = due
       due: "",
       abstract: "",
-      category1: 1,
-      category2: 5,
-      category3: 3,
-      category4: 7,
+      category1: ["1"],
+      category2: ["5"],
+      category3: ["3"],
+      category4: ["7"],
       image: "string",
       language: "deutsch"
     },
     {
-      ID: "Auf-02",
+      itemID: "Auf-02",
+      abbreviation: "D2-R",
       title: "D2-R",
       authors: ["IDC"],
       status: 2,
       //0 = avail.; 1 = out of stock; 2 = due
       due: "",
       abstract: "",
-      category1: 1,
-      category2: 5,
-      category3: 3,
-      category4: 7,
+      category1: ["1"],
+      category2: ["5"],
+      category3: ["3"],
+      category4: ["7"],
       image: "string",
       publisher: "Pearson",
       language: "deutsch"
