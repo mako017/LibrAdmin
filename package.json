@@ -11,6 +11,8 @@
     "build": "quasar build"
   },
   "dependencies": {
+    "@casl/ability": "^5.2.2",
+    "@casl/vue": "^1.2.2",
     "@quasar/extras": "^1.9.18",
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
