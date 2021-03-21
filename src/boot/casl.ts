@@ -1,10 +1,7 @@
 import { boot } from "quasar/wrappers";
 import { abilitiesPlugin } from "@casl/vue";
 import { Ability } from "@casl/ability";
-
-type Actions = "create" | "read" | "update" | "delete";
-type Subjects = "activeUser" | "allUsers" | "article" | "tests";
-export type AbilityType = [Actions, Subjects];
+import { AbilityType } from "src/components/models";
 
 export const ability = new Ability<AbilityType>();
 

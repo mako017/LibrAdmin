@@ -1,3 +1,5 @@
+import { Ability } from "@casl/ability";
+
 export interface Todo {
   id: number;
   content: string;
@@ -41,12 +43,13 @@ export interface CategoryItem {
 
 export interface UserAccount {
   name: string;
-  accessGroup: 0 | 1 | 2 | 3;
+  accessGroup: userRoles;
   token: string;
-  //0 = guest; 1 = registered user; 2 = staff; 3 = admin
   reservedMedia?: Array<string>;
   borrowedMedia?: Array<string>;
 }
+
+export type userRoles = "admin" | "mod" | "user" | "guest";
 
 export interface UserCredentials {
   username: string;
@@ -61,5 +64,10 @@ export interface serverResponse {
 
 export interface ServerResponseUser {
   name: string;
-  role: string;
+  role: userRoles;
 }
+
+export type AppAbility = Ability<AbilityType>;
+export type Actions = "read" | "manage";
+export type Subjects = "activeUser" | "allUsers" | "article" | "tests";
+export type AbilityType = [Actions, Subjects];

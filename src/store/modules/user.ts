@@ -4,7 +4,8 @@ import axios from "axios";
 import {
   serverResponse,
   ServerResponseUser,
-  UserCredentials
+  UserCredentials,
+  userRoles
 } from "src/components/models";
 
 @Module({ name: "user", namespaced: true, store })
@@ -12,7 +13,7 @@ export default class User extends VuexModule {
   private readonly USER_API = "user.php";
   private readonly AUTH_API = "authentication.php";
   private _name: string | undefined = undefined;
-  private _role: string | undefined = undefined;
+  private _role: userRoles = "guest";
   private _loggedIn = false;
 
   get name() {
@@ -54,7 +55,7 @@ export default class User extends VuexModule {
     this._name = name;
   }
   @Mutation
-  setRole(role: string) {
+  setRole(role: userRoles) {
     this._role = role;
   }
   @Mutation
