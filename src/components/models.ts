@@ -57,6 +57,12 @@ export interface UserCredentials {
   rememberMe: "true" | "false";
 }
 
+export interface signupCredentials {
+  username: string;
+  password: string;
+  email: string;
+}
+
 export interface serverResponse {
   call: string;
   payload: unknown;
