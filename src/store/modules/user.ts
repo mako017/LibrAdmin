@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   serverResponse,
   ServerResponseUser,
+  signupCredentials,
   UserCredentials,
   userRoles
 } from "src/components/models";
@@ -45,9 +46,20 @@ export default class User extends VuexModule {
           this.setLogin(true);
         }
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(err => console.error(err));
+  }
+
+  @Action
+  signUp(signupCredentials: signupCredentials) {
+    axios
+      .post(
+        "http://localhost/libradmin/php/api/" + this.USER_API,
+        JSON.stringify({ payload: signupCredentials })
+      )
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => console.error(err));
   }
 
   @Mutation
