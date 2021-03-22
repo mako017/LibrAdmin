@@ -2,21 +2,44 @@
 
 class User{
     public $name = "";
+    public $password = "";
+    public $email = "";
     public $role = "";
 
-    public function __construct(string $name, string $role) {
+    public function __construct(string $name, string $password = "", string $email = "", string $role = "") {
         $this->name = $name;
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->email = $email;
         $this->role = $role;
     }
 }
 
 class UserGateway{
-    public function createUser(User $user){
+    private function userExists(User $user)
+    {
+        $exists = DB::queryFirstRow("SELECT `name` FROM `users` WHERE `name`=%s", $user->name);
+        if ($exists !== null) return true;
+        return false;
+    }
+
+    public function signup(User $user){
+        if($this->userExists($user)){
+            serverResponse("nameTaken");
+            return;
+        }
         DB::insert("users",[
             "name" => $user->name,
             "password" => $user->password,
-            "role" => $user->role,
+            "email" => $user->email,
+            "role" => "user",
+            "verified" => 0,
         ]);
+        if (DB::affectedRows() > 0) {
+            serverResponse("registered");
+        }
+        else{
+            serverResponse("registrationFailed");
+        }
     }
 
     public function readAllUsers(){
