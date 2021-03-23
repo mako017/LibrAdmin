@@ -46,14 +46,14 @@ class UserGateway{
         $users = [];
         $result = DB::query("SELECT * FROM `users`");
         foreach ($result as $row) {
-            $users[] = new User($row["name"], $row["role"]);
+            $users[] = new User($row["name"], "", "", $row["role"]);
         }
         return $users;
     }
 
     public function readSingleUser(string $userName){
         $row = DB::queryFirstRow("SELECT * FROM `users` WHERE `name`=%s", $userName);
-        return new User($row["name"], $row["role"]);
+        return new User($row["name"], "", "", $row["role"]);
     }
 
     public function updateUser(User $user){
