@@ -23,7 +23,8 @@ export default class RegisterForm extends Vue {
     password: ""
   };
   register() {
-    user.signUp(this.credentials);
+    const response = user.signUp(this.credentials);
+    this.$emit("submitted", response);
   }
 }
 </script>
