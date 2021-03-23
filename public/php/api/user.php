@@ -14,8 +14,8 @@ switch ($requestMethod) {
         break;
     case 'POST':
         $username = isset($payload["username"]) ? $payload["username"] : "";
-        $password = isset($payload["username"]) ? $payload["username"] : "";
-        $email = isset($payload["username"]) ? $payload["username"] : "";
+        $password = isset($payload["password"]) ? $payload["password"] : "";
+        $email = isset($payload["email"]) ? $payload["email"] : "";
         if ($username === "" | $password ==="" | $email ==="") {
             serverResponse("noCredentials");
             return;

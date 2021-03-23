@@ -4,8 +4,6 @@ require_once 'user.php';
 
 $auth = new Authenticator();
 $auth->rememberMe();
-// $auth = new Authenticator("mako017", "LibrAdmin", "true");
-// $auth->login();
 
 class Authenticator {
     private string $SECRET_KEY = "015514d3f7df22eec03193d0a0df8e53";
@@ -58,7 +56,7 @@ class Authenticator {
     {
         $result = DB::queryFirstRow('SELECT `password` FROM `users` WHERE `name` = %s', $this->userName);
         if (!password_verify($this->password, $result["password"])){
-            echo("not authentified");
+            serverResponse("passwordMismatch");
             return;
         }
         else{

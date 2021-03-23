@@ -8,7 +8,7 @@ class User{
 
     public function __construct(string $name, string $password = "", string $email = "", string $role = "") {
         $this->name = $name;
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;
         $this->email = $email;
         $this->role = $role;
     }
@@ -29,7 +29,7 @@ class UserGateway{
         }
         DB::insert("users",[
             "name" => $user->name,
-            "password" => $user->password,
+            "password" => password_hash($user->password, PASSWORD_DEFAULT),
             "email" => $user->email,
             "role" => "user",
             "verified" => 0,
