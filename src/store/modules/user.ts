@@ -29,37 +29,21 @@ export default class User extends VuexModule {
 
   @Action
   loginUser(credentials: UserCredentials) {
-    axios
-      .post(
-        "http://localhost/libradmin/php/api/" + this.AUTH_API,
-        JSON.stringify({
-          call: "login",
-          payload: credentials
-        })
-      )
-      .then(response => {
-        const data: serverResponse = response.data as serverResponse;
-        if (data?.call === "login") {
-          const user: ServerResponseUser = data.payload as ServerResponseUser;
-          this.setName(user.name);
-          this.setRole(user.role);
-          this.setLogin(true);
-        }
+    return axios.post(
+      "http://localhost/libradmin/php/api/" + this.AUTH_API,
+      JSON.stringify({
+        call: "login",
+        payload: credentials
       })
-      .catch(err => console.error(err));
+    );
   }
 
   @Action
-  signUp(signupCredentials: signupCredentials) {
-    axios
-      .post(
-        "http://localhost/libradmin/php/api/" + this.USER_API,
-        JSON.stringify({ payload: signupCredentials })
-      )
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => console.error(err));
+  signUp(signupCred: signupCredentials) {
+    return axios.post(
+      "http://localhost/libradmin/php/api/" + this.USER_API,
+      JSON.stringify({ payload: signupCred })
+    );
   }
 
   @Mutation
