@@ -13,7 +13,6 @@ switch ($requestMethod) {
         var_dump($userGateway->readAllUsers());
         break;
     case 'POST':
-        var_dump($postData);
         $username = isset($payload["username"]) ? $payload["username"] : "";
         $password = isset($payload["username"]) ? $payload["username"] : "";
         $email = isset($payload["username"]) ? $payload["username"] : "";
