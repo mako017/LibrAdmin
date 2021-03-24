@@ -11,6 +11,7 @@ import { user } from "./store";
 export default class App extends Vue {
   created() {
     user.updateAbilities();
+    user.attemptRemember();
   }
 }
 </script>

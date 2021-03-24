@@ -20,8 +20,8 @@ switch ($requestMethod) {
                 $auth->setUser($user,$password, $remember);
                 $auth->login();
                 break;
-            case 'remember':
-
+            case 'rememberMe':
+                $auth->rememberMe();
                 break;
             default:
                 # code...

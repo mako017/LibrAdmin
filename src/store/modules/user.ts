@@ -33,6 +33,19 @@ export default class User extends VuexModule {
   }
 
   @Action
+  attemptRemember() {
+    axios
+      .post(
+        "http://localhost/libradmin/php/api/" + this.AUTH_API,
+        JSON.stringify({
+          call: "rememberMe"
+        })
+      )
+      .then()
+      .catch(err => console.log(err));
+  }
+
+  @Action
   updateAbilities() {
     const rules = PermissionManager.initPermissions(this._role);
     // this._ability.update(rules);
