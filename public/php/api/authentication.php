@@ -16,7 +16,7 @@ switch ($requestMethod) {
             case 'login':
                 $user = isset($payload["username"]) ? $payload["username"] : "";
                 $password = isset($payload["password"]) ? $payload["password"] : "";
-                $remember = isset($payload["username"]) ? $payload["username"] : "false";
+                $remember = isset($payload["rememberMe"]) ? $payload["rememberMe"] : "false";
                 $auth->setUser($user,$password, $remember);
                 $auth->login();
                 break;

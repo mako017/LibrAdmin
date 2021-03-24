@@ -78,7 +78,7 @@ class Authenticator {
         $cookie = $this->userName . ':' . $token;
         $mac = hash_hmac('sha256', $cookie, $this->SECRET_KEY);
         $cookie .= ':' . $mac;
-        setcookie('rememberme', $cookie, time()+60*60*24*14,"","", true, true);
+        setcookie('rememberme', $cookie, time()+60*60*24*14,"","", true, false); //set to true for production
     }
 
     public function rememberMe() 
