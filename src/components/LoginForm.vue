@@ -17,7 +17,6 @@ import { Component, Vue } from "vue-property-decorator";
 import { user } from "src/store";
 import { serverResponse, ServerResponseUser, UserCredentials } from "./models";
 import { AxiosResponse } from "app/node_modules/axios";
-import { PermissionManager } from "src/assets/ts/permissionManager";
 
 @Component
 export default class LoginForm extends Vue {
@@ -38,16 +37,11 @@ export default class LoginForm extends Vue {
         const data = response.data;
         if (data.call === "login") {
           const userdata = data.payload as ServerResponseUser;
-          // console.log(userdata);
 
           user.setName(userdata.name);
           user.setRole(userdata.role);
           user.setLogin(true);
-          // console.log(user.role);
-
-          const rules = PermissionManager.initPermissions(user.role);
-          this.$ability.update(rules);
-          console.log(rules);
+          user.updateAbilities();
         }
       })
       .catch(err => console.error(err));

@@ -1,11 +1,25 @@
-import { AbilityBuilder, Ability, AbilityClass } from "@casl/ability";
-import { userRoles, AppAbility } from "components/models";
+import {
+  AbilityBuilder,
+  Ability,
+  AbilityClass,
+  SubjectRawRule,
+  ExtractSubjectType,
+  MongoQuery
+} from "@casl/ability";
+import { AnyObject } from "@casl/ability/dist/types/types";
+import { userRoles, AppAbility, Actions, Subjects } from "components/models";
 
 const ability = Ability as AbilityClass<AppAbility>;
 const builder = new AbilityBuilder(ability);
 
+export type Rules = SubjectRawRule<
+  Actions,
+  ExtractSubjectType<Subjects>,
+  MongoQuery<AnyObject>
+>[];
+
 export class PermissionManager {
-  static initPermissions(role: userRoles) {
+  static initPermissions(role: userRoles): Rules {
     switch (role) {
       case "admin":
         builder.can("manage", "activeUser");

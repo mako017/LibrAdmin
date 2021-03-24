@@ -1,9 +1,10 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import store from "../";
 import axios from "axios";
+import { Ability } from "@casl/ability";
+import { AbilityType } from "src/components/models";
+import { PermissionManager, Rules } from "src/assets/ts/permissionManager";
 import {
-  serverResponse,
-  ServerResponseUser,
   signupCredentials,
   UserCredentials,
   userRoles
@@ -16,6 +17,7 @@ export default class User extends VuexModule {
   private _name: string | undefined = undefined;
   private _role: userRoles = "guest";
   private _loggedIn = false;
+  private _ability = new Ability<AbilityType>();
 
   get name() {
     return this._name;
@@ -25,6 +27,17 @@ export default class User extends VuexModule {
   }
   get isLoggedIn() {
     return this._loggedIn;
+  }
+  get ability() {
+    return this._ability;
+  }
+
+  @Action
+  updateAbilities() {
+    const rules = PermissionManager.initPermissions(this._role);
+    // this._ability.update(rules);
+    // this.setAbility(rules);
+    this.context.commit("setAbility", rules);
   }
 
   @Action
@@ -57,5 +70,9 @@ export default class User extends VuexModule {
   @Mutation
   setLogin(status: boolean) {
     this._loggedIn = status;
+  }
+  @Mutation
+  setAbility(rules: Rules) {
+    this._ability.update(rules);
   }
 }

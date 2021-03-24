@@ -5,13 +5,12 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { PermissionManager } from "assets/ts/permissionManager";
+import { user } from "./store";
 
 @Component
 export default class App extends Vue {
   created() {
-    const rules = PermissionManager.initPermissions("guest");
-    this.$ability.update(rules);
+    user.updateAbilities();
   }
 }
 </script>

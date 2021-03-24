@@ -1,12 +1,5 @@
 import { RouteConfig } from "vue-router";
-import { Ability } from "@casl/ability";
 import { user } from "src/store/index";
-import { PermissionManager } from "src/assets/ts/permissionManager";
-import { AbilityType } from "src/components/models";
-
-const abilities = new Ability<AbilityType>(
-  PermissionManager.initPermissions(user.role)
-);
 
 const routes: RouteConfig[] = [
   {
@@ -19,7 +12,7 @@ const routes: RouteConfig[] = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/UserControl.vue") }],
     beforeEnter(to, from, next) {
-      if (abilities.cannot("manage", "allUsers")) {
+      if (user.ability.cannot("manage", "allUsers")) {
         next("/account");
       } else {
         next();
@@ -41,7 +34,7 @@ const routes: RouteConfig[] = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/UserLogin.vue") }],
     beforeEnter(to, from, next) {
-      if (abilities.can("manage", "activeUser")) {
+      if (user.ability.can("manage", "activeUser")) {
         next("/account");
       } else {
         next();
@@ -55,7 +48,7 @@ const routes: RouteConfig[] = [
       { path: "", component: () => import("pages/AccountSettings.vue") }
     ],
     beforeEnter(to, from, next) {
-      if (abilities.cannot("manage", "activeUser")) {
+      if (user.ability.cannot("manage", "activeUser")) {
         next("/login");
       } else {
         next();
