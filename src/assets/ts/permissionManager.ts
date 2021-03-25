@@ -28,21 +28,29 @@ export class PermissionManager {
         builder.can("read", "allUsers");
         builder.can("manage", "tests");
         builder.can("read", "tests");
+        builder.can("manage", "articles");
+        builder.can("read", "articles");
 
         break;
       case "mod":
+        builder.can("manage", "activeUser");
+        builder.can("read", "activeUser");
         builder.can("manage", "allUsers");
         builder.can("read", "allUsers");
         builder.can("manage", "tests");
         builder.can("read", "tests");
+        builder.can("manage", "articles");
+        builder.can("read", "articles");
         break;
       case "user":
         builder.can("read", "activeUser");
         builder.can("manage", "activeUser");
         builder.can("read", "tests");
+        builder.can("read", "articles");
         break;
       case "guest":
         builder.can("read", "tests");
+        builder.can("read", "articles");
         break;
 
       default:

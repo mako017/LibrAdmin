@@ -1,13 +1,15 @@
 import { Ability } from "@casl/ability";
 
-export interface Todo {
-  id: number;
-  content: string;
-}
-
-export interface Meta {
-  totalCount: number;
-}
+export type EssentialLinks = {
+  title: string;
+  caption: string;
+  icon: string;
+  link: string;
+  ability?: {
+    action: Actions;
+    subject: Subjects;
+  };
+};
 
 export interface Catalogue {
   items: Array<CatalogueItem>;
@@ -75,5 +77,5 @@ export interface ServerResponseUser {
 
 export type AppAbility = Ability<AbilityType>;
 export type Actions = "read" | "manage";
-export type Subjects = "activeUser" | "allUsers" | "article" | "tests";
+export type Subjects = "activeUser" | "allUsers" | "articles" | "tests";
 export type AbilityType = [Actions, Subjects];

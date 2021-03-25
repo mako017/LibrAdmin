@@ -43,6 +43,7 @@
 
 <script lang="ts">
 import EssentialLink from "components/EssentialLink.vue";
+import { EssentialLinks } from "src/components/models";
 import { user } from "src/store";
 import { Vue, Component } from "vue-property-decorator";
 
@@ -52,7 +53,7 @@ import { Vue, Component } from "vue-property-decorator";
 export default class MainLayout extends Vue {
   leftDrawerOpen = false;
   get essentialLinks() {
-    return [
+    const allLinks: EssentialLinks[] = [
       {
         title: "Home",
         caption: "Landing page",
@@ -63,13 +64,37 @@ export default class MainLayout extends Vue {
         title: "User Administration",
         caption: "Add, edit, and delete users",
         icon: "group",
-        link: "./#/usercontrol"
+        link: "./#/usercontrol",
+        ability: {
+          action: "manage",
+          subject: "allUsers"
+        }
+      },
+      {
+        title: "Manage News",
+        caption: "Edit news for the landing page",
+        icon: "announcement",
+        link: "./#/newscontrol",
+        ability: {
+          action: "manage",
+          subject: "articles"
+        }
       },
       {
         title: "Catalogue",
         caption: "See the complete library catalogue",
         icon: "format_list_numbered",
         link: "./#/catalogue"
+      },
+      {
+        title: "My media",
+        caption: "See the media you've borrowed and reserved",
+        icon: "attachment",
+        link: "./#/mymedia",
+        ability: {
+          action: "manage",
+          subject: "activeUser"
+        }
       },
       {
         title: "QR Scanner",
@@ -84,6 +109,12 @@ export default class MainLayout extends Vue {
         link: user.isLoggedIn ? "./#/account" : "./#/login"
       }
     ];
+    return allLinks.filter(link => {
+      if (!link.ability) {
+        return true;
+      }
+      return user.ability.can(link.ability.action, link.ability.subject);
+    });
   }
 }
 </script>
