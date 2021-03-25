@@ -1,22 +1,22 @@
 <?php
 
 class CatalogueItem{
-    private int $catalogueCounter = -1;
-    private string $itemID = "";
-    private string $abbreviation = "";
-    private string $title = "";
-    private array $authors = [];
-    private int $status = 0;
-    private string $currentlyWith = "";
-    private string $due = "";
-    private string $abstract = "";
-    private string $category1 = "";
-    private string $category2 = "";
-    private string $category3 = "";
-    private string $category4 = "";
-    private string $image = "";
-    private string $publisher = "";
-    private string $language = "";
+    public int $catalogueCounter = -1;
+    public string $itemID = "";
+    public string $abbreviation = "";
+    public string $title = "";
+    public array $authors = [];
+    public int $status = 0;
+    public string $currentlyWith = "";
+    public string $due = "";
+    public string $abstract = "";
+    public string $category1 = "";
+    public string $category2 = "";
+    public string $category3 = "";
+    public string $category4 = "";
+    public string $image = "";
+    public string $publisher = "";
+    public string $language = "";
 
     public function __construct(Array $row) {
         $this->catalogueCounter = $row["catalogueCounter"];

@@ -2,7 +2,7 @@
   <div class="col">
     <q-table
       title="Catalogue"
-      :data="mockdata"
+      :data="data"
       :columns="columns"
       row-key="name"
     ></q-table>
@@ -10,10 +10,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { CatalogueItem } from "components/models.ts";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { CatalogueItem } from "components/models";
+import { catalogue } from "src/store/";
 
-@Component
+@Component({})
 export default class ItemTable extends Vue {
   columns = [
     {
@@ -97,58 +98,7 @@ export default class ItemTable extends Vue {
       sortable: true
     }
   ];
-  mockdata: CatalogueItem[] = [
-    {
-      itemID: "Int-01",
-      abbreviation: "DESIGMA",
-      title: "DESIGMA",
-      authors: ["Nicolas Becker", "Frank M. Spinath"],
-      status: 0,
-      //0 = avail.; 1 = out of stock; 2 = due
-      due: "",
-      abstract: "",
-      category1: ["1"],
-      category2: ["5"],
-      category3: ["3"],
-      category4: ["7"],
-      image: "string",
-      publisher: "Hogrefe",
-      language: "deutsch"
-    },
-    {
-      itemID: "Auf-01",
-      abbreviation: "FAIR II",
-      title: "FAIR II",
-      authors: ["IDC"],
-      status: 0,
-      //0 = avail.; 1 = out of stock; 2 = due
-      due: "",
-      abstract: "",
-      category1: ["1"],
-      category2: ["5"],
-      category3: ["3"],
-      category4: ["7"],
-      image: "string",
-      language: "deutsch"
-    },
-    {
-      itemID: "Auf-02",
-      abbreviation: "D2-R",
-      title: "D2-R",
-      authors: ["IDC"],
-      status: 2,
-      //0 = avail.; 1 = out of stock; 2 = due
-      due: "",
-      abstract: "",
-      category1: ["1"],
-      category2: ["5"],
-      category3: ["3"],
-      category4: ["7"],
-      image: "string",
-      publisher: "Pearson",
-      language: "deutsch"
-    }
-  ];
+  data: CatalogueItem[] = catalogue.allItems;
 }
 </script>
 

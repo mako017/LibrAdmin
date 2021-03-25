@@ -1,4 +1,6 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 $postData = json_decode(file_get_contents("php://input"),true);
 $call = isset($postData['call']) ? $postData['call'] : '';
@@ -9,8 +11,8 @@ $catalogueGateway = new CatalogueGateway();
 
 switch ($requestMethod) {
     case 'GET':
-        var_dump($catalogueGateway->readAllItems());
-        // var_dump($userGateway->readAllUsers());
+        $items = $catalogueGateway->readAllItems();
+        serverResponse("catalogueLoaded", $items);
         break;
     case 'POST':
         $item = new CatalogueItem($payload);

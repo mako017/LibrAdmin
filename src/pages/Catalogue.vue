@@ -16,12 +16,17 @@
 import { Component, Vue } from "vue-property-decorator";
 import ItemTable from "components/Catalogue/ItemTable.vue";
 import ItemCreator from "components/Catalogue/ItemCreator.vue";
+import { catalogue } from "src/store";
 
 @Component({
   components: { ItemTable, ItemCreator }
 })
 export default class Catalogue extends Vue {
   createPrompt = false;
+
+  created() {
+    catalogue.queryCatalogue();
+  }
 }
 </script>
 
