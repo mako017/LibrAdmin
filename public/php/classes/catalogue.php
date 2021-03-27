@@ -5,7 +5,7 @@ class CatalogueItem{
     public string $itemID = "";
     public string $abbreviation = "";
     public string $title = "";
-    public array $authors = [];
+    public string $authors = "";
     public int $status = 0;
     public string $currentlyWith = "";
     public string $due = "";
@@ -18,23 +18,45 @@ class CatalogueItem{
     public string $publisher = "";
     public string $language = "";
 
-    public function __construct(Array $row) {
-        $this->catalogueCounter = $row["catalogueCounter"];
-        $this->itemID = $row["itemID"];
-        $this->abbreviation = $row["abbreviation"];
-        $this->title = $row["title"];
-        $this->authors = explode(";",$row["authors"]);
-        $this->status = $row["status"];
-        $this->currentlyWith = $row["currentlyWith"];
-        $this->due = $row["due"];
-        $this->abstract = $row["abstract"];
-        $this->category1 = $row["category1"];
-        $this->category2 = $row["category2"];
-        $this->category3 = $row["category3"];
-        $this->category4 = $row["category4"];
-        $this->image = $row["image"];
-        $this->publisher = $row["publisher"];
-        $this->language = $row["language"];
+    public function __construct(Array $row = NULL) {
+        if ($row !== NULL) {
+            $this->catalogueCounter = $row["catalogueCounter"];
+            $this->itemID = $row["itemID"];
+            $this->abbreviation = $row["abbreviation"];
+            $this->title = $row["title"];
+            $this->authors = $row["authors"];
+            $this->status = $row["status"];
+            $this->currentlyWith = $row["currentlyWith"];
+            $this->due = $row["due"];
+            $this->abstract = $row["abstract"];
+            $this->category1 = $row["category1"];
+            $this->category2 = $row["category2"];
+            $this->category3 = $row["category3"];
+            $this->category4 = $row["category4"];
+            $this->image = $row["image"];
+            $this->publisher = $row["publisher"];
+            $this->language = $row["language"];
+        }
+    }
+
+    public function importJson($payload)
+    {
+        // var_dump(implode("; ",$payload["authors"]));
+        $this->itemID =$payload["itemID"];
+        $this->abbreviation = $payload["abbreviation"];
+        $this->title = $payload["title"];
+        $this->authors = $payload["authors"];
+        $this->status = $payload["status"];
+        $this->currentlyWith = $payload["currentlyWith"];
+        $this->due = $payload["due"];
+        $this->abstract = $payload["abstract"];
+        $this->category1 = $payload["category1"];
+        $this->category2 = $payload["category2"];
+        $this->category3 = $payload["category3"];
+        $this->category4 = $payload["category4"];
+        $this->image = $payload["image"];
+        $this->publisher = $payload["publisher"];
+        $this->language = $payload["language"];
     }
 
 }
@@ -47,7 +69,7 @@ class CatalogueGateway{
             "itemID"=> $item->itemID,
             "abbreviation"=> $item->abbreviation,
             "title"=> $item->title,
-            "authors"=> implode(";", $item->authors),
+            "authors"=> $item->authors,
             "status"=> $item->status,
             "currentlyWith"=> $item->currentlyWith,
             "due"=> $item->due,
@@ -81,7 +103,7 @@ class CatalogueGateway{
         [
             "abbreviation"=> $item->abbreviation,
             "title"=> $item->title,
-            "authors"=> implode(";", $item->authors),
+            "authors"=> $item->authors,
             "status"=> $item->status,
             "currentlyWith"=> $item->currentlyWith,
             "due"=> $item->due,

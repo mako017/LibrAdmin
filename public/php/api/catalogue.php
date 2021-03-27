@@ -15,7 +15,9 @@ switch ($requestMethod) {
         serverResponse("catalogueLoaded", $items);
         break;
     case 'POST':
-        $item = new CatalogueItem($payload);
+        // var_dump($payload);
+        $item = new CatalogueItem();
+        $item->importJson($payload);
         $catalogueGateway->createItem($item);
         break;
     case 'PUT':
