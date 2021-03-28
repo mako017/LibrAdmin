@@ -2,15 +2,16 @@
   <div class="col">
     <q-table
       title="Catalogue"
-      :data="data"
+      :data="allItems"
       :columns="columns"
+      :rows-per-page-options="[0]"
       row-key="name"
     ></q-table>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { CatalogueItem } from "components/models";
 import { catalogue } from "src/store/";
 
@@ -46,7 +47,7 @@ export default class ItemTable extends Vue {
       required: true,
       label: "Authors",
       align: "left",
-      field: (row: CatalogueItem) => row.authors.join(", "),
+      field: (row: CatalogueItem) => row.authors,
       sortable: true
     },
     {
@@ -98,7 +99,9 @@ export default class ItemTable extends Vue {
       sortable: true
     }
   ];
-  data: CatalogueItem[] = catalogue.allItems;
+  get allItems() {
+    return catalogue.allItems;
+  }
 }
 </script>
 
