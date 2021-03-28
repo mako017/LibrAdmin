@@ -19,7 +19,6 @@ export default class Catalogue extends VuexModule {
       .then(response => {
         const data = response.data as serverResponse;
         if (data.call === "catalogueLoaded") {
-          console.log(data.payload);
           this.setCatalogue(data.payload as CatalogueItem[]);
         }
       })

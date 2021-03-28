@@ -34,7 +34,7 @@
         <q-input
           class="col-5"
           filled
-          v-model="authors"
+          v-model="catalogueItem.authors"
           label="Authors (seperated by semi-colons)"
           type="text"
         >
@@ -45,7 +45,7 @@
         <q-input
           class="col-5 q-mb-xs"
           filled
-          v-model="category1"
+          v-model="catalogueItem.category1"
           label="Category 1"
           type="text"
         >
@@ -53,7 +53,7 @@
         <q-input
           class="col-5 q-mb-xs"
           filled
-          v-model="category2"
+          v-model="catalogueItem.category2"
           label="Category 2"
           type="text"
         >
@@ -61,7 +61,7 @@
         <q-input
           class="col-5 q-mb-xs"
           filled
-          v-model="category3"
+          v-model="catalogueItem.category3"
           label="Category 3"
           type="text"
         >
@@ -69,7 +69,7 @@
         <q-input
           class="col-5 q-mb-xs"
           filled
-          v-model="category4"
+          v-model="catalogueItem.category4"
           label="Category 4"
           type="text"
         >
@@ -115,15 +115,17 @@
 
       <q-card-actions align="right" class="text-primary">
         <q-btn flat label="Cancel" @click="closePrompt" />
-        <q-btn flat label="Add Item" @click="closePrompt" />
+        <q-btn flat label="Add Item" @click="uploadItem" />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script lang="ts">
+import axios from "axios";
+import { catalogue } from "src/store";
 import { Component, Vue } from "vue-property-decorator";
-import { CatalogueItem } from "../models";
+import { CatalogueItem, serverResponse } from "../models";
 
 @Component
 export default class ItemCreator extends Vue {
@@ -132,72 +134,39 @@ export default class ItemCreator extends Vue {
     itemID: "",
     abbreviation: "",
     title: "",
-    authors: [],
+    authors: "",
     status: 0,
     currentlyWith: "",
     due: "",
     abstract: "",
-    category1: [],
-    category2: [],
-    category3: [],
-    category4: [],
+    category1: "",
+    category2: "",
+    category3: "",
+    category4: "",
     image: "",
     publisher: "",
     language: ""
   };
 
-  public set authors(e: string) {
-    this.catalogueItem.authors = e.split(";").map(author => {
-      return author.trim();
-    });
-  }
-  public get authors() {
-    return this.catalogueItem.authors.join("; ");
-  }
-  public set category1(e: string) {
-    this.catalogueItem.category1 = e.split(";").map(category => {
-      return category.trim();
-    });
-  }
-  public get category1() {
-    return this.catalogueItem.category1
-      ? this.catalogueItem.category1.join("; ")
-      : "";
-  }
-  public set category2(e: string) {
-    this.catalogueItem.category2 = e.split(";").map(category => {
-      return category.trim();
-    });
-  }
-  public get category2() {
-    return this.catalogueItem.category2
-      ? this.catalogueItem.category2.join("; ")
-      : "";
-  }
-  public set category3(e: string) {
-    this.catalogueItem.category3 = e.split(";").map(category => {
-      return category.trim();
-    });
-  }
-  public get category3() {
-    return this.catalogueItem.category3
-      ? this.catalogueItem.category3.join("; ")
-      : "";
-  }
-  public set category4(e: string) {
-    this.catalogueItem.category4 = e.split(";").map(category => {
-      return category.trim();
-    });
-  }
-  public get category4() {
-    return this.catalogueItem.category4
-      ? this.catalogueItem.category4.join("; ")
-      : "";
-  }
-
   closePrompt() {
     this.prompt = false;
     this.$emit("closePrompt");
+  }
+
+  uploadItem() {
+    axios
+      .post("http://localhost/libradmin/php/api/catalogue.php", {
+        payload: this.catalogueItem
+      })
+      .then(response => {
+        const data = response.data as serverResponse;
+        if (data?.call === "success") {
+          this.prompt = false;
+          this.$emit("closePrompt");
+          catalogue.queryCatalogue();
+        } else alert("Oops, this didn't work.");
+      })
+      .catch(err => console.error(err));
   }
 }
 </script>
