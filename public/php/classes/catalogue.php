@@ -82,6 +82,9 @@ class CatalogueGateway{
             "publisher"=> $item->publisher,
             "language"=> $item->language
         ]);
+        if (DB::affectedRows() > 0) {
+            serverResponse("success");
+        }
     }
 
     public function readAllItems(){
