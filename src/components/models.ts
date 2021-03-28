@@ -21,16 +21,16 @@ export interface CatalogueItem {
   itemID: string;
   abbreviation: string;
   title: string;
-  authors: Array<string>;
+  authors: string;
   status: 0 | 1 | 2;
   //0 = avail.; 1 = out of stock; 2 = due
   currentlyWith?: string;
   due?: string;
   abstract?: string;
-  category1?: Array<string>;
-  category2?: Array<string>;
-  category3?: Array<string>;
-  category4?: Array<string>;
+  category1?: string;
+  category2?: string;
+  category3?: string;
+  category4?: string;
   image?: string;
   publisher?: string;
   language?: string;
@@ -73,6 +73,7 @@ export interface serverResponse {
 export interface ServerResponseUser {
   name: string;
   role: userRoles;
+  email: string;
 }
 
 export type AppAbility = Ability<AbilityType>;

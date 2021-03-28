@@ -2,10 +2,11 @@ import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import store from "../";
 import axios from "axios";
 import { Ability } from "@casl/ability";
-import { AbilityType } from "src/components/models";
+import { AbilityType, ServerResponseUser } from "src/components/models";
 import { PermissionManager, Rules } from "src/assets/ts/permissionManager";
 import {
   signupCredentials,
+  serverResponse,
   UserCredentials,
   userRoles
 } from "src/components/models";
@@ -15,12 +16,16 @@ export default class User extends VuexModule {
   private readonly USER_API = "user.php";
   private readonly AUTH_API = "authentication.php";
   private _name: string | undefined = undefined;
+  private _email: string | undefined = undefined;
   private _role: userRoles = "guest";
   private _loggedIn = false;
   private _ability = new Ability<AbilityType>();
 
   get name() {
     return this._name;
+  }
+  get email() {
+    return this._email;
   }
   get role() {
     return this._role;
@@ -41,7 +46,17 @@ export default class User extends VuexModule {
           call: "rememberMe"
         })
       )
-      .then()
+      .then(response => {
+        const data = response.data as serverResponse;
+        if (data.call === "login") {
+          const payload = data.payload as ServerResponseUser;
+          this.setLogin(true);
+          this.setName(payload.name);
+          this.setRole(payload.role);
+          this.setEmail(payload.email);
+          this.updateAbilities();
+        }
+      })
       .catch(err => console.log(err));
   }
 
@@ -75,6 +90,10 @@ export default class User extends VuexModule {
   @Mutation
   setName(name: string) {
     this._name = name;
+  }
+  @Mutation
+  setEmail(email: string) {
+    this._email = email;
   }
   @Mutation
   setRole(role: userRoles) {
