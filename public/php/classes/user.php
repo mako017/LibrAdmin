@@ -53,7 +53,7 @@ class UserGateway{
 
     public function readSingleUser(string $userName){
         $row = DB::queryFirstRow("SELECT * FROM `users` WHERE `name`=%s", $userName);
-        return new User($row["name"], "", "", $row["role"]);
+        return new User($row["name"], "", $row["email"], $row["role"]);
     }
 
     public function updateUser(User $user){
