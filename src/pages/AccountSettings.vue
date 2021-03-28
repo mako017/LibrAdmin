@@ -59,8 +59,8 @@ import { user } from "src/store";
 @Component
 export default class AccountSettings extends Vue {
   userInfo = {
-    name: "mako017",
-    email: "",
+    name: user.name,
+    email: user.email,
     role: user.role
   };
 }
