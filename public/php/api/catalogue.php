@@ -1,6 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 $postData = json_decode(file_get_contents("php://input"),true);
 $call = isset($postData['call']) ? $postData['call'] : '';

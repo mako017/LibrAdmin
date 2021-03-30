@@ -1,6 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 require_once '../config.php';
 require_once '../classes/user.php';
