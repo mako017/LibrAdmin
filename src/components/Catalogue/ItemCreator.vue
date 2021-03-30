@@ -155,7 +155,7 @@ export default class ItemCreator extends Vue {
 
   uploadItem() {
     axios
-      .post("http://localhost/libradmin/php/api/catalogue.php", {
+      .post("./php/api/catalogue.php", {
         payload: this.catalogueItem
       })
       .then(response => {
