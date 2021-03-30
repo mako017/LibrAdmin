@@ -2,7 +2,7 @@
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 require_once '../config.php';
 require_once '../classes/user.php';
-$postData = json_decode(file_get_contents("php://input"),true);
+$postData = json_decode(urldecode(file_get_contents("php://input")),true);
 $payload = isset($postData['payload']) ? $postData['payload'] : '';
 $userGateway = new UserGateway();
 

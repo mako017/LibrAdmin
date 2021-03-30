@@ -1,0 +1,6 @@
+<?php
+// CREATE TABLE `dbs1711638`.`catalogue` ( `catalogueCounter` INT NOT NULL AUTO_INCREMENT ,  `itemID` VARCHAR(20) NOT NULL ,  `abbreviation` TINYTEXT NOT NULL ,  `title` TEXT NOT NULL ,  `authors` TEXT NOT NULL ,  `status` INT NOT NULL ,  `currentlyWith` TINYTEXT NOT NULL ,  `due` TINYTEXT NOT NULL ,  `abstract` TEXT NOT NULL ,  `category1` TINYTEXT NOT NULL ,  `category2` TINYTEXT NOT NULL ,  `category3` TINYTEXT NOT NULL ,  `category4` TINYTEXT NOT NULL ,  `image` TEXT NOT NULL ,  `publisher` TINYTEXT NOT NULL ,  `language` TINYTEXT NOT NULL ,    PRIMARY KEY  (`catalogueCounter`),    UNIQUE  (`itemID`)) ENGINE = InnoDB;
+
+// CREATE TABLE `dbs1711638`.`users` ( `userID` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(20) NOT NULL , `password` TEXT NOT NULL , `email` TINYTEXT NOT NULL , `role` TINYTEXT NOT NULL , `verified` BOOLEAN NOT NULL , `creationDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`userID`), UNIQUE (`name`)) ENGINE = InnoDB;
+
+// CREATE TABLE `dbs1711638`.`logintokens` ( `userName` VARCHAR(20) NOT NULL , `token` TEXT NOT NULL , `createdOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ) ENGINE = InnoDB;

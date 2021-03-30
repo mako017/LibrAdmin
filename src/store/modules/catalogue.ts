@@ -15,7 +15,7 @@ export default class Catalogue extends VuexModule {
   @Action
   queryCatalogue() {
     axios
-      .get("http://localhost/libradmin/php/api/" + this.API)
+      .get("./php/api/" + this.API)
       .then(response => {
         const data = response.data as serverResponse;
         if (data.call === "catalogueLoaded") {

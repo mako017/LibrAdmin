@@ -41,10 +41,12 @@ export default class User extends VuexModule {
   attemptRemember() {
     axios
       .post(
-        "http://localhost/libradmin/php/api/" + this.AUTH_API,
-        JSON.stringify({
-          call: "rememberMe"
-        })
+        "./php/api/" + this.AUTH_API,
+        encodeURIComponent(
+          JSON.stringify({
+            call: "rememberMe"
+          })
+        )
       )
       .then(response => {
         const data = response.data as serverResponse;
@@ -71,19 +73,21 @@ export default class User extends VuexModule {
   @Action
   loginUser(credentials: UserCredentials) {
     return axios.post(
-      "http://localhost/libradmin/php/api/" + this.AUTH_API,
-      JSON.stringify({
-        call: "login",
-        payload: credentials
-      })
+      "./php/api/" + this.AUTH_API,
+      encodeURIComponent(
+        JSON.stringify({
+          call: "login",
+          payload: credentials
+        })
+      )
     );
   }
 
   @Action
   signUp(signupCred: signupCredentials) {
     return axios.post(
-      "http://localhost/libradmin/php/api/" + this.USER_API,
-      JSON.stringify({ payload: signupCred })
+      "./php/api/" + this.USER_API,
+      encodeURIComponent(JSON.stringify({ payload: signupCred }))
     );
   }
 

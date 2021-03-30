@@ -1,7 +1,7 @@
 <?php
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-$postData = json_decode(file_get_contents("php://input"),true);
+$postData = json_decode(urldecode(file_get_contents("php://input")),true);
 $call = isset($postData['call']) ? $postData['call'] : '';
 $payload = isset($postData['payload']) ? $postData['payload'] : '';
 require_once '../config.php';
@@ -15,7 +15,7 @@ switch ($requestMethod) {
                 $user = isset($payload["username"]) ? $payload["username"] : "";
                 $password = isset($payload["password"]) ? $payload["password"] : "";
                 $remember = isset($payload["rememberMe"]) ? $payload["rememberMe"] : "false";
-                $auth->setUser($user,$password, $remember);
+                $auth->setUser($user, $password, $remember);
                 $auth->login();
                 break;
             case 'rememberMe':

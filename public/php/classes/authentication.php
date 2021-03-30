@@ -1,8 +1,6 @@
 <?php
 require_once '../config.php';
-require_once 'user.php';
-
-$auth = new Authenticator();
+require_once '../classes/user.php';
 
 class Authenticator {
     private string $SECRET_KEY = "015514d3f7df22eec03193d0a0df8e53";
