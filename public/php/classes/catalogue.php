@@ -121,8 +121,6 @@ class CatalogueGateway{
             "language"=> $item->language
         ],
         "catalogueCounter=%i", $item->catalogueCounter);
-        echo($item->catalogueCounter);
-        echo(DB::affectedRows());
     }
 
     public function deleteItem(string $userName){
