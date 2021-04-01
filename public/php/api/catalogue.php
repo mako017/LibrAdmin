@@ -1,6 +1,6 @@
 <?php
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-$postData = json_decode(file_get_contents("php://input"),true);
+$postData = json_decode(urldecode(file_get_contents("php://input")),true);
 $call = isset($postData['call']) ? $postData['call'] : '';
 $payload = isset($postData['payload']) ? $postData['payload'] : '';
 require_once '../config.php';
@@ -13,14 +13,15 @@ switch ($requestMethod) {
         serverResponse("catalogueLoaded", $items);
         break;
     case 'POST':
-        // var_dump($payload);
+        var_dump($payload);
         $item = new CatalogueItem();
         $item->importJson($payload);
         $catalogueGateway->createItem($item);
         break;
     case 'PUT':
-        // $user = new User("test","user");
-        // $userGateway->updateUser($user);
+        $item = new CatalogueItem();
+        $item->importJson($payload);
+        $catalogueGateway->updateItem($item);
         break;
     case 'DELETE':
         // $userGateway->deleteUser("test");

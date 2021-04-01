@@ -41,7 +41,7 @@ class CatalogueItem{
 
     public function importJson($payload)
     {
-        // var_dump(implode("; ",$payload["authors"]));
+        $this->catalogueCounter = isset($payload["catalogueCounter"]) ? $payload["catalogueCounter"] : -1;
         $this->itemID =$payload["itemID"];
         $this->abbreviation = $payload["abbreviation"];
         $this->title = $payload["title"];
@@ -104,6 +104,7 @@ class CatalogueGateway{
     public function updateItem(CatalogueItem $item){
         DB::update($this->table,
         [
+            "itemID"=> $item->itemID,
             "abbreviation"=> $item->abbreviation,
             "title"=> $item->title,
             "authors"=> $item->authors,
@@ -119,7 +120,9 @@ class CatalogueGateway{
             "publisher"=> $item->publisher,
             "language"=> $item->language
         ],
-        "itemID=%s", $item->itemId);
+        "catalogueCounter=%i", $item->catalogueCounter);
+        echo($item->catalogueCounter);
+        echo(DB::affectedRows());
     }
 
     public function deleteItem(string $userName){
