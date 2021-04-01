@@ -13,6 +13,7 @@ import {
 
 @Module({ name: "user", namespaced: true, store })
 export default class User extends VuexModule {
+  private readonly API_PATH = process.env.API_BASE_URL as string;
   private readonly USER_API = "user.php";
   private readonly AUTH_API = "authentication.php";
   private _name: string | undefined = undefined;
@@ -41,7 +42,7 @@ export default class User extends VuexModule {
   attemptRemember() {
     axios
       .post(
-        "./php/api/" + this.AUTH_API,
+        this.API_PATH + this.AUTH_API,
         encodeURIComponent(
           JSON.stringify({
             call: "rememberMe"
@@ -73,7 +74,7 @@ export default class User extends VuexModule {
   @Action
   loginUser(credentials: UserCredentials) {
     return axios.post(
-      "./php/api/" + this.AUTH_API,
+      this.API_PATH + this.AUTH_API,
       encodeURIComponent(
         JSON.stringify({
           call: "login",
@@ -86,7 +87,7 @@ export default class User extends VuexModule {
   @Action
   signUp(signupCred: signupCredentials) {
     return axios.post(
-      "./php/api/" + this.USER_API,
+      this.API_PATH + this.USER_API,
       encodeURIComponent(JSON.stringify({ payload: signupCred }))
     );
   }

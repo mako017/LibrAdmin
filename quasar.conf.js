@@ -47,6 +47,11 @@ module.exports = configure(function(ctx) {
     build: {
       vueRouterMode: "hash", // available values: 'hash', 'history'
       distDir: "E:\\xampp\\htdocs\\LibrAdmin",
+      env: {
+        API_BASE_URL: ctx.dev
+          ? "http://localhost/libradmin/php/api/"
+          : "https://lets-test.it/libradmin/php/api/"
+      },
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -79,7 +84,7 @@ module.exports = configure(function(ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
-      https: true,
+      https: false,
       port: 8080,
       open: true // opens browser window automatically
     },

@@ -5,6 +5,7 @@ import { CatalogueItem, serverResponse } from "src/components/models";
 
 @Module({ name: "catalogue", namespaced: true, store })
 export default class Catalogue extends VuexModule {
+  private readonly API_PATH = process.env.API_BASE_URL as string;
   private readonly API = "catalogue.php";
   private _allItems: CatalogueItem[] = [];
 
@@ -15,7 +16,7 @@ export default class Catalogue extends VuexModule {
   @Action
   queryCatalogue() {
     axios
-      .get("./php/api/" + this.API)
+      .get(this.API_PATH + this.API)
       .then(response => {
         const data = response.data as serverResponse;
         if (data.call === "catalogueLoaded") {
