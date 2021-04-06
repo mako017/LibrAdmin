@@ -21,16 +21,9 @@ switch ($requestMethod) {
             case 'rememberMe':
                 $auth->rememberMe();
                 break;
-            default:
-                # code...
-                break;
         }
         break;
-    case 'DELETE':
-        // $userGateway->deleteUser("test");
-        break;
     default:
-        // header("HTTP/1.1 404 Not Found");
-        // exit();
-        break;
+        header("HTTP/1.1 404 Not Found");
+        exit();
 }
