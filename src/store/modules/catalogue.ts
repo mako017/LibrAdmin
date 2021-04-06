@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import store from "..";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { CatalogueItem, serverResponse } from "src/components/models";
 
 interface updateCommit {
@@ -16,6 +16,13 @@ export default class Catalogue extends VuexModule {
 
   get allItems() {
     return this._allItems;
+  }
+
+  @Action
+  deleteItem(catalogueCounter: number): Promise<AxiosResponse<serverResponse>> {
+    return axios.delete(
+      this.API_PATH + this.API + `?catalogueCounter=${catalogueCounter}`
+    );
   }
 
   @Action
