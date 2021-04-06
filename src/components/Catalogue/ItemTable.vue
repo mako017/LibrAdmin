@@ -1,6 +1,8 @@
 <template>
   <div class="col">
     <q-table
+      :grid="$q.screen.xs"
+      :dense="$q.screen.lt.md"
       title="Catalogue"
       :data="allItems"
       :columns="columns"
