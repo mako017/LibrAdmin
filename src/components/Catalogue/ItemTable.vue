@@ -11,6 +11,16 @@
     >
       <template v-slot:body="props" v-if="ability.can('manage', 'tests')">
         <q-tr :props="props">
+          <q-menu anchor="bottom left" self="top left" context-menu>
+            <q-item v-close-popup clickable>
+              <q-item-section>Edit</q-item-section>
+            </q-item>
+            <q-item v-close-popup clickable>
+              <q-item-section @click="deleteItem(props.row.catalogueCounter)"
+                >Delete</q-item-section
+              >
+            </q-item>
+          </q-menu>
           <q-td key="ID" :props="props">
             {{ props.row.itemID }}
             <q-popup-edit
@@ -230,6 +240,20 @@ export default class ItemTable extends Vue {
   setEditData(data: CatalogueItem) {
     this.popupEditData = { ...data };
     console.log(this.popupEditData);
+  }
+  deleteItem(catalogueCounter: number) {
+    catalogue
+      .deleteItem(catalogueCounter)
+      .then(response => {
+        const data = response.data;
+        if ((data.call = "success")) {
+          alert("successfully deleted entry");
+          catalogue.queryCatalogue();
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 }
 </script>
