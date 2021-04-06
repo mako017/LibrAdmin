@@ -1,4 +1,5 @@
 <?php
+require_once '../classes/permissions.php';
 
 class CatalogueItem{
     public int $catalogueCounter = -1;
@@ -65,6 +66,9 @@ class CatalogueGateway{
     private string $table = "catalogue";
 
     public function createItem(CatalogueItem $item){
+        if ( !PermissionManager::handleSessionPermission("manage tests")) {
+            return;
+        }
         DB::insert($this->table,[
             "itemID"=> $item->itemID,
             "abbreviation"=> $item->abbreviation,
@@ -102,6 +106,9 @@ class CatalogueGateway{
     }
 
     public function updateItem(CatalogueItem $item){
+        if ( !PermissionManager::handleSessionPermission("manage tests")) {
+            return;
+        }
         DB::update($this->table,
         [
             "itemID"=> $item->itemID,
@@ -123,7 +130,10 @@ class CatalogueGateway{
         "catalogueCounter=%i", $item->catalogueCounter);
     }
 
-    public function deleteItem(string $userName){
-        DB::delete($this->table, 'name=%s', $userName);
+    public function deleteItem(string $itemID){
+        if ( !PermissionManager::handleSessionPermission("manage tests")) {
+            return;
+        }
+        DB::delete($this->table, 'name=%s', $itemID);
     }
 }

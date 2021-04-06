@@ -8,6 +8,9 @@ $userGateway = new UserGateway();
 
 switch ($requestMethod) {
     case 'GET':
+        if ( !PermissionManager::handleSessionPermission("read allUsers")) {
+            return;
+        }
         var_dump($userGateway->readAllUsers());
         break;
     case 'POST':

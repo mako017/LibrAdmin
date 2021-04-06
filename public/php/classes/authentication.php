@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../classes/user.php';
+require_once '../classes/permissions.php';
 
 class Authenticator {
     private string $SECRET_KEY = "015514d3f7df22eec03193d0a0df8e53";
@@ -46,6 +47,10 @@ class Authenticator {
     {
         $userGate = new UserGateway();
         $user = $userGate->readSingleUser($this->userName);
+        $_SESSION["user"] = $user;
+        $userPermissions = new PermissionManager();
+        $userPermissions->getPermissionsByRole($user->role);
+        $_SESSION["userPermissions"] = serialize($userPermissions);
         serverResponse("login", $user);
     }
 
@@ -54,7 +59,7 @@ class Authenticator {
         $result = DB::queryFirstRow('SELECT `password` FROM `users` WHERE `name` = %s', $this->userName);
         if (!password_verify($this->password, $result["password"])){
             serverResponse("passwordMismatch");
-            return;
+            exit();
         }
         else{
             $this->authentifyUser();
