@@ -23,7 +23,12 @@ switch ($requestMethod) {
         $catalogueGateway->updateItem($item);
         break;
     case 'DELETE':
-        // $userGateway->deleteUser("test");
+        if (isset($_GET["catalogueCounter"])) {
+            $catalogueGateway->deleteItem($_GET["catalogueCounter"]);
+        }
+        else{
+            serverResponse("cannot delete");
+        }
         break;
     default:
         header("HTTP/1.1 404 Not Found");

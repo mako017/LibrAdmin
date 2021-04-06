@@ -134,6 +134,11 @@ class CatalogueGateway{
         if ( !PermissionManager::handleSessionPermission("manage tests")) {
             return;
         }
-        DB::delete($this->table, 'name=%s', $itemID);
+        DB::delete($this->table, 'catalogueCounter=%i', $itemID);
+        if (DB::affectedRows()>0) {
+            serverResponse("success");
+            return;
+        }
+        serverResponse("Could not delete entry");
     }
 }
