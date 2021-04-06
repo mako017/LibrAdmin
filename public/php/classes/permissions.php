@@ -6,19 +6,20 @@ class PermissionManager
 
     function __construct() {
         $this->permissions[] = "read tests";
+        $this->permissions[] = "read articles";
     }
 
     function getPermissionsByRole(string $role)
     {
         switch ($role) {
             case 'admin':
-                $newPermissions = ["manage activeUser","read activeUser","manage activeUser","read activeUser","manage activeUser","read activeUser","manage activeUser","read activeUser"];
+                $newPermissions = ["manage activeUser","read activeUser","manage allUsers","read allUsers","manage tests","manage articles"];
                 break;
             case 'mod':
-                $newPermissions = ["manage activeUser","read activeUser","manage activeUser","read activeUser","manage activeUser","read activeUser","manage activeUser","read activeUser"];
+                $newPermissions = ["manage activeUser","read activeUser","manage allUsers","read allUsers","manage tests","manage articles"];
                 break;
             case 'user':
-                $newPermissions = ["manage activeUser","read activeUser","read tests", "read articles"];
+                $newPermissions = ["manage activeUser","read activeUser"];
                 break;
             default:
                 $newPermissions = [];
