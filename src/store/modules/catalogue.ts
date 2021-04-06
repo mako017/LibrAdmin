@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
 import store from "..";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { CatalogueItem, serverResponse } from "src/components/models";
 
 interface updateCommit {
@@ -46,10 +46,14 @@ export default class Catalogue extends VuexModule {
           ),
           { method: "PUT" }
         )
-        .then(response => {
-          console.log(response);
-        })
-        .catch(err => console.log(err));
+        .catch((err: AxiosError) => {
+          if (err.response?.status === 403) {
+            this.queryCatalogue();
+            alert(
+              "It seems you don't have the required permission to do this."
+            );
+          }
+        });
     }
   }
 
