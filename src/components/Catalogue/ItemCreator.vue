@@ -155,9 +155,14 @@ export default class ItemCreator extends Vue {
 
   uploadItem() {
     axios
-      .post((process.env.API_BASE_URL as string) + "/catalogue.php", {
-        payload: this.catalogueItem
-      })
+      .post(
+        (process.env.API_BASE_URL as string) + "catalogue.php",
+        encodeURIComponent(
+          JSON.stringify({
+            payload: this.catalogueItem
+          })
+        )
+      )
       .then(response => {
         const data = response.data as serverResponse;
         if (data?.call === "success") {
