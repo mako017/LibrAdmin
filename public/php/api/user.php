@@ -11,7 +11,7 @@ switch ($requestMethod) {
         if ( !PermissionManager::handleSessionPermission("read allUsers")) {
             return;
         }
-        var_dump($userGateway->readAllUsers());
+        // var_dump($userGateway->readAllUsers());
         break;
     case 'POST':
         $username = isset($payload["username"]) ? $payload["username"] : "";

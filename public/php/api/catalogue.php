@@ -13,7 +13,6 @@ switch ($requestMethod) {
         serverResponse("catalogueLoaded", $items);
         break;
     case 'POST':
-        var_dump($payload);
         $item = new CatalogueItem();
         $item->importJson($payload);
         $catalogueGateway->createItem($item);
