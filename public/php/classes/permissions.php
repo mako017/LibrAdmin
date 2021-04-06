@@ -36,7 +36,10 @@ class PermissionManager
     }
     static function handleSessionPermission(string $permission)
     {
-        if (!isset($_SESSION["userPermissions"])) return false;
+        if (!isset($_SESSION["userPermissions"])) {
+            header("HTTP/1.1 403 Forbidden" );
+            exit("Insufficient Permissions");
+        }
         return unserialize($_SESSION["userPermissions"])->can($permission);
     }
 }
