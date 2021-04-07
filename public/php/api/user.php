@@ -2,6 +2,7 @@
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 require_once '../config.php';
 require_once '../classes/user.php';
+require_once '../classes/permissions.php';
 $postData = json_decode(urldecode(file_get_contents("php://input")),true);
 $payload = isset($postData['payload']) ? $postData['payload'] : '';
 $userGateway = new UserGateway();
@@ -11,7 +12,8 @@ switch ($requestMethod) {
         if ( !PermissionManager::handleSessionPermission("read allUsers")) {
             return;
         }
-        // var_dump($userGateway->readAllUsers());
+        $users = $userGateway->readAllUsers();
+        serverResponse("success", $users);
         break;
     case 'POST':
         $username = isset($payload["username"]) ? $payload["username"] : "";

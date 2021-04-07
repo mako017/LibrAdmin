@@ -46,7 +46,7 @@ class UserGateway{
         $users = [];
         $result = DB::query("SELECT * FROM `users`");
         foreach ($result as $row) {
-            $users[] = new User($row["name"], "", "", $row["role"]);
+            $users[] = new User($row["name"], "", $row["email"], $row["role"]);
         }
         return $users;
     }
