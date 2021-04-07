@@ -45,8 +45,9 @@ export interface CategoryItem {
 
 export interface UserAccount {
   name: string;
-  accessGroup: userRoles;
-  token: string;
+  email: string;
+  role: userRoles;
+  // token: string;
   reservedMedia?: Array<string>;
   borrowedMedia?: Array<string>;
 }
