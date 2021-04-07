@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+import { userControl } from "src/store";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
@@ -24,51 +25,21 @@ export default class UserTable extends Vue {
       sortable: true
     },
     {
-      name: "group",
+      name: "email",
       align: "center",
-      label: "Access Group",
-      field: "accessGroup",
+      label: "E-Mail Address",
+      field: "email",
       sortable: true
     },
     {
-      name: "reservedMedia",
-      label: "Reserved Media",
-      field: "reservedMedia",
-      sortable: true
-    },
-    {
-      name: "borrowedMedia",
-      label: "Borrowed Media",
-      field: "borrowedMedia",
+      name: "role",
+      required: true,
+      label: "User Role",
+      field: "role",
       sortable: true
     }
   ];
-  mockdata = [
-    {
-      name: "user1",
-      accessGroup: 1,
-      token: "string",
-      //0 = guest; 1 = registered user; 2 = staff; 3 = admin
-      reservedMedia: 1,
-      borrowedMedia: 0
-    },
-    {
-      name: "user2",
-      accessGroup: 2,
-      token: "string",
-      //0 = guest; 1 = registered user; 2 = staff; 3 = admin
-      reservedMedia: 0,
-      borrowedMedia: 2
-    },
-    {
-      name: "user3",
-      accessGroup: 3,
-      token: "string",
-      //0 = guest; 1 = registered user; 2 = staff; 3 = admin
-      reservedMedia: 0,
-      borrowedMedia: 0
-    }
-  ];
+  mockdata = userControl.users;
 }
 </script>
 
