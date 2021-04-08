@@ -48,9 +48,18 @@ module.exports = configure(function(ctx) {
       vueRouterMode: "hash", // available values: 'hash', 'history'
       distDir: "E:\\xampp\\htdocs\\LibrAdmin",
       env: {
+        // API_BASE_URL: "http://localhost/libradmin/php/api/"
         API_BASE_URL: ctx.dev
           ? "http://localhost/libradmin/php/api/"
-          : "https://lets-test.it/libradmin/php/api/"
+          : "/Testothek/php/api/"
+      },
+      extendWebpack(cfg) {
+        cfg.module.rules.push({
+          enforce: "pre",
+          test: /\.(js|vue)$/,
+          loader: "eslint-loader",
+          exclude: /(node_modules|quasar)/
+        });
       },
       // transpile: false,
 
