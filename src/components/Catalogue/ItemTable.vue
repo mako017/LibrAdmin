@@ -34,10 +34,10 @@
               <q-input v-model="popupEditData.itemID" dense autofocus />
             </q-popup-edit>
           </q-td>
-          <q-td key="status" :props="props">
-            {{ props.row.status }}
+          <q-td key="abbreviation" :props="props">
+            {{ props.row.abbreviation }}
             <q-popup-edit
-              v-model="popupEditData.status"
+              v-model="popupEditData.abbreviation"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
               buttons
@@ -162,11 +162,11 @@ export default class ItemTable extends Vue {
       sortable: true
     },
     {
-      name: "status",
+      name: "abbreviation",
       required: true,
-      label: "Available",
+      label: "Abbreviation",
       align: "left",
-      field: (row: CatalogueItem) => row.status,
+      field: (row: CatalogueItem) => row.abbreviation,
       sortable: true
     },
     {
@@ -175,7 +175,9 @@ export default class ItemTable extends Vue {
       label: "Title",
       align: "left",
       field: (row: CatalogueItem) => row.title,
-      sortable: true
+      sortable: true,
+      headerStyle: "max-width:10%",
+      style: "max-width:10%; overflow-x:hidden;"
     },
     {
       name: "authors",
