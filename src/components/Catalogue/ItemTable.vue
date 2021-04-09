@@ -13,8 +13,13 @@
         <q-tr :props="props">
           <q-menu anchor="bottom left" self="top left" context-menu>
             <q-item v-close-popup clickable>
-              <q-item-section @click="generateQRCode(props.row)"
-                >Get QR Code</q-item-section
+              <q-item-section @click="getQRCode(props.row, false)"
+                >Download QR Code</q-item-section
+              >
+            </q-item>
+            <q-item v-close-popup clickable>
+              <q-item-section @click="getQRCode(props.row, true)"
+                >Print QR Code</q-item-section
               >
             </q-item>
             <q-item v-close-popup clickable>
@@ -144,10 +149,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { CatalogueItem } from "components/models";
 import { catalogue, user } from "src/store/";
 import { emptyCatalogueItem } from "assets/ts/initFunctions";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-import { TDocumentDefinitions } from "app/node_modules/@types/pdfmake/interfaces";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { createTestLabel } from "assets//ts/pdfPrinter";
 
 @Component({})
 export default class ItemTable extends Vue {
@@ -263,50 +265,8 @@ export default class ItemTable extends Vue {
         console.error(err);
       });
   }
-  generateQRCode(test: CatalogueItem) {
-    const docDefinition: TDocumentDefinitions = {
-      pageSize: { width: 170, height: "auto" },
-      pageMargins: [5, 5],
-      content: [
-        {
-          text: "Testothek der Fachrichtung Psychologie",
-          alignment: "left",
-          fontSize: 8
-        },
-        {
-          text: "Geb A1.3, 3. OG",
-          alignment: "left",
-          fontSize: 8,
-          margin: [0, 0, 0, 20]
-        },
-        {
-          qr: "https://lets-test.it/testothek/?test=" + test.itemID,
-          alignment: "center",
-          margin: [0, 0, 0, 20]
-        },
-        {
-          columns: [
-            {
-              text: test.itemID,
-              alignment: "left",
-              fontSize: 8,
-              margin: [0, 10, 0, 0]
-            },
-            {
-              image: "eule",
-              alignment: "right",
-              width: 50,
-              height: 20.25
-            }
-          ]
-        }
-      ],
-      images: {
-        eule:
-          "https://upload.wikimedia.org/wikipedia/de/thumb/b/bc/Logo-Universit%C3%A4t_des_Saarlandes.svg/200px-Logo-Universit%C3%A4t_des_Saarlandes.svg.png"
-      }
-    };
-    pdfMake.createPdf(docDefinition).print();
+  getQRCode(test: CatalogueItem, print: boolean) {
+    createTestLabel(test, print);
   }
 }
 </script>
