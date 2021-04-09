@@ -7,6 +7,8 @@
       :data="allItems"
       :columns="columns"
       :rows-per-page-options="[0]"
+      virtual-scroll
+      style="height: 90vh;"
       row-key="name"
     >
       <template v-slot:body="props" v-if="ability.can('manage', 'tests')">
