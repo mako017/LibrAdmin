@@ -7,7 +7,7 @@
       :itemID="qrcodeContent"
     />
     <q-btn
-      class="self-end"
+      class="fixed-bottom-right q-ma-md"
       round
       color="primary"
       label="+"
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import ItemTable from "components/Catalogue/ItemTable.vue";
 import ItemCreator from "components/Catalogue/ItemCreator.vue";
 import ItemInspector from "components/Catalogue/ItemInspector.vue";
@@ -27,10 +27,7 @@ import ItemInspector from "components/Catalogue/ItemInspector.vue";
 })
 export default class Catalogue extends Vue {
   createPrompt = false;
-
-  created() {
-    catalogue.queryCatalogue();
-  }
+  @Prop() qrcodeContent!: string | undefined;
 }
 </script>
 

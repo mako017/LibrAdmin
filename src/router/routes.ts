@@ -1,5 +1,5 @@
 import { RouteConfig } from "vue-router";
-import { user } from "src/store/index";
+import { catalogue, user } from "src/store/index";
 
 const routes: RouteConfig[] = [
   {
@@ -20,9 +20,24 @@ const routes: RouteConfig[] = [
     }
   },
   {
-    path: "/catalogue",
+    path: "/catalogue/:qrcodeContent?",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/Catalogue.vue") }]
+    // props: true,
+    children: [
+      {
+        path: "",
+        component: () => import("pages/Catalogue.vue"),
+        props: true,
+        beforeEnter(to, from, next) {
+          catalogue
+            .queryCatalogue()
+            .then(res => {
+              next();
+            })
+            .catch(err => console.error(err));
+        }
+      }
+    ]
   },
   {
     path: "/qrscanner",

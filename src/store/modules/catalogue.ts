@@ -26,8 +26,18 @@ export default class Catalogue extends VuexModule {
   }
 
   @Action
+  hasItem(itemID: string): Promise<CatalogueItem | undefined> {
+    return new Promise(resolve => {
+      const index = this._allItems.findIndex(el => el.itemID === itemID);
+      console.log(index);
+
+      resolve(index === -1 ? undefined : this._allItems[index]);
+    });
+  }
+
+  @Action
   queryCatalogue() {
-    axios
+    return axios
       .get(this.API_PATH + this.API)
       .then(response => {
         const data = response.data as serverResponse;
@@ -55,7 +65,7 @@ export default class Catalogue extends VuexModule {
         )
         .catch((err: AxiosError) => {
           if (err.response?.status === 403) {
-            this.queryCatalogue();
+            this.queryCatalogue().catch(err => console.error(err));
             alert(
               "It seems you don't have the required permission to do this."
             );
