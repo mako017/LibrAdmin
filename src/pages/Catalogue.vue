@@ -2,6 +2,10 @@
   <q-page class="column items-center justify-between q-pa-md">
     <ItemTable class="catalogue-table q-mt-sm" />
     <ItemCreator v-if="createPrompt" @closePrompt="createPrompt = false" />
+    <ItemInspector
+      v-if="qrcodeContent && qrcodeContent !== ''"
+      :itemID="qrcodeContent"
+    />
     <q-btn
       class="self-end"
       round
@@ -16,10 +20,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import ItemTable from "components/Catalogue/ItemTable.vue";
 import ItemCreator from "components/Catalogue/ItemCreator.vue";
-import { catalogue } from "src/store";
+import ItemInspector from "components/Catalogue/ItemInspector.vue";
 
 @Component({
-  components: { ItemTable, ItemCreator }
+  components: { ItemTable, ItemCreator, ItemInspector }
 })
 export default class Catalogue extends Vue {
   createPrompt = false;
