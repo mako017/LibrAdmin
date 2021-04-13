@@ -78,6 +78,6 @@ export interface ServerResponseUser {
 }
 
 export type AppAbility = Ability<AbilityType>;
-export type Actions = "read" | "manage";
+export type Actions = "read" | "manage" | "delete";
 export type Subjects = "activeUser" | "allUsers" | "articles" | "tests";
 export type AbilityType = [Actions, Subjects];

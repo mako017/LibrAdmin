@@ -24,7 +24,11 @@
                 >Print QR Code</q-item-section
               >
             </q-item>
-            <q-item v-close-popup clickable>
+            <q-item
+              v-close-popup
+              clickable
+              v-if="ability.can('delete', 'tests')"
+            >
               <q-item-section @click="deleteItem(props.row.catalogueCounter)"
                 >Delete</q-item-section
               >
@@ -260,7 +264,7 @@ export default class ItemTable extends Vue {
         const data = response.data;
         if ((data.call = "success")) {
           alert("successfully deleted entry");
-          catalogue.queryCatalogue().catch(err=>console.error(err));
+          catalogue.queryCatalogue().catch(err => console.error(err));
         }
       })
       .catch(err => {
