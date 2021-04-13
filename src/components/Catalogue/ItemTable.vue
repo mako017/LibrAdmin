@@ -260,7 +260,7 @@ export default class ItemTable extends Vue {
         const data = response.data;
         if ((data.call = "success")) {
           alert("successfully deleted entry");
-          catalogue.queryCatalogue();
+          catalogue.queryCatalogue().catch(err=>console.error(err));
         }
       })
       .catch(err => {

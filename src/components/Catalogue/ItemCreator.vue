@@ -168,7 +168,7 @@ export default class ItemCreator extends Vue {
         if (data?.call === "success") {
           this.prompt = false;
           this.$emit("closePrompt");
-          catalogue.queryCatalogue();
+          catalogue.queryCatalogue().catch(err => console.error(err));
         } else alert("Oops, this didn't work.");
       })
       .catch(err => console.error(err));
