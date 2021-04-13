@@ -31,7 +31,7 @@ const routes: RouteConfig[] = [
         beforeEnter(to, from, next) {
           catalogue
             .queryCatalogue()
-            .then(res => {
+            .then(() => {
               next();
             })
             .catch(err => console.error(err));
