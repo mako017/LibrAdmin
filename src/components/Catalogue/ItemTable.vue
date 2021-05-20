@@ -53,7 +53,7 @@
               @save="val => saveChange()"
               buttons
             >
-              <q-input v-model="popupEditData.status" dense autofocus />
+              <q-input v-model="popupEditData.abbreviation" dense autofocus />
             </q-popup-edit>
           </q-td>
           <q-td key="title" :props="props">
