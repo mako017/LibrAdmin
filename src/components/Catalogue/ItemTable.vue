@@ -155,7 +155,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { CatalogueItem } from "components/models";
 import { catalogue, user } from "src/store/";
 import { emptyCatalogueItem } from "assets/ts/initFunctions";
-import { createTestLabel } from "assets//ts/pdfPrinter";
+import { createTestLabel } from "assets/ts/pdfPrinter";
 
 @Component({})
 export default class ItemTable extends Vue {
