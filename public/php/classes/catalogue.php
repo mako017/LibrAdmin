@@ -2,22 +2,22 @@
 require_once '../classes/permissions.php';
 
 class CatalogueItem{
-    public int $catalogueCounter = -1;
-    public string $itemID = "";
-    public string $abbreviation = "";
-    public string $title = "";
-    public string $authors = "";
-    public int $status = 0;
-    public string $currentlyWith = "";
-    public string $due = "";
-    public string $abstract = "";
-    public string $category1 = "";
-    public string $category2 = "";
-    public string $category3 = "";
-    public string $category4 = "";
-    public string $image = "";
-    public string $publisher = "";
-    public string $language = "";
+    public $catalogueCounter = -1;
+    public $itemID = "";
+    public $abbreviation = "";
+    public $title = "";
+    public $authors = "";
+    public $status = 0;
+    public $currentlyWith = "";
+    public $due = "";
+    public $abstract = "";
+    public $category1 = "";
+    public $category2 = "";
+    public $category3 = "";
+    public $category4 = "";
+    public $image = "";
+    public $publisher = "";
+    public $language = "";
 
     public function __construct(Array $row = NULL) {
         if ($row !== NULL) {
@@ -63,7 +63,7 @@ class CatalogueItem{
 }
 
 class CatalogueGateway{
-    private string $table = "catalogue";
+    private $table = "catalogue";
 
     public function createItem(CatalogueItem $item){
         if ( !PermissionManager::handleSessionPermission("manage tests")) {

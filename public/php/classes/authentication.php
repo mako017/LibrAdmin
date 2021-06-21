@@ -4,12 +4,12 @@ require_once '../classes/user.php';
 require_once '../classes/permissions.php';
 
 class Authenticator {
-    private string $SECRET_KEY = "015514d3f7df22eec03193d0a0df8e53";
-    private string $TOKEN_TABLE = "logintokens";
+    private $SECRET_KEY = "015514d3f7df22eec03193d0a0df8e53";
+    private $TOKEN_TABLE = "logintokens";
 
-    private string $userName;
-    private string $password;
-    private bool $keepMe;
+    private $userName;
+    private $password;
+    private $keepMe;
 
     public function setUser(string $userName, string $password, string $keepMe = "false") {
         $this->userName = $userName;
