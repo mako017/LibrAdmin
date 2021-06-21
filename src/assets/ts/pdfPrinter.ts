@@ -26,7 +26,7 @@ export function createTestLabel(test: CatalogueItem, print = false) {
         margin: [0, 0, 0, 20]
       },
       {
-        qr: "https://testothek.uni-saarland.de/catalogue/?test=" + test.itemID,
+        qr: "https://testothek.uni-saarland.de/#/catalogue/" + test.itemID,
         alignment: "center",
         margin: [0, 0, 0, 20]
       },
