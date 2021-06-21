@@ -51,7 +51,7 @@ module.exports = configure(function(ctx) {
         // API_BASE_URL: "http://localhost/libradmin/php/api/"
         API_BASE_URL: ctx.dev
           ? "http://localhost/libradmin/php/api/"
-          : "/Testothek/php/api/"
+          : "/php/api/"
       },
       extendWebpack(cfg) {
         cfg.module.rules.push({
