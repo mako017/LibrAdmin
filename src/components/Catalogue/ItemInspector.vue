@@ -86,7 +86,7 @@
       <q-input readonly type="textarea"></q-input>
     </q-card-section>
     <q-card-actions align="right" class="text-primary">
-      <q-btn flat label="Cancel" />
+      <q-btn flat label="Cancel" @click.prevent="closeCard" />
       <q-btn flat label="Reserve" />
     </q-card-actions>
   </q-card>
@@ -101,13 +101,9 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class ItemInspector extends Vue {
   @Prop() itemID!: string;
   item = emptyCatalogueItem();
-  // get items() {
-  //   return catalogue.allItems;
-  // }
-  // get item() {
-  //   const index = this.items.findIndex(el => el.itemID === this.itemID);
-  //   return this.items[index] ? this.items[index] : emptyCatalogueItem();
-  // }
+  closeCard() {
+    this.$emit("cancel");
+  }
 
   mounted() {
     catalogue

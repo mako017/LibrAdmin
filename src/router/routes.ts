@@ -20,7 +20,7 @@ const routes: RouteConfig[] = [
     }
   },
   {
-    path: "/catalogue/:qrcodeContent?",
+    path: "/catalogue/:testID?",
     component: () => import("layouts/MainLayout.vue"),
     // props: true,
     children: [

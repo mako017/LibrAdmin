@@ -3,8 +3,9 @@
     <ItemTable class="catalogue-table q-mt-sm" />
     <ItemCreator v-if="createPrompt" @closePrompt="createPrompt = false" />
     <ItemInspector
-      v-if="qrcodeContent && qrcodeContent !== ''"
-      :itemID="qrcodeContent"
+      @cancel="testID = undefined"
+      v-if="testID && testID !== ''"
+      :itemID="testID"
     />
     <q-btn
       class="fixed-bottom-right q-ma-md"
@@ -27,7 +28,7 @@ import ItemInspector from "components/Catalogue/ItemInspector.vue";
 })
 export default class Catalogue extends Vue {
   createPrompt = false;
-  @Prop() qrcodeContent!: string | undefined;
+  @Prop() testID!: string | undefined;
 }
 </script>
 
