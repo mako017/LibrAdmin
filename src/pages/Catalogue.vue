@@ -1,6 +1,9 @@
 <template>
   <q-page class="column items-center justify-between q-pa-md">
-    <ItemTable class="catalogue-table q-mt-sm" />
+    <ItemTable
+      @select="val => (testID = val)"
+      class="catalogue-table q-mt-sm"
+    />
     <ItemCreator v-if="createPrompt" @closePrompt="createPrompt = false" />
     <ItemInspector
       @cancel="testID = undefined"

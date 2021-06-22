@@ -10,6 +10,7 @@
       virtual-scroll
       style="height: 90vh;"
       row-key="name"
+      @row-click="(evt, row, index) => rowClick(row)"
     >
       <template v-slot:body="props" v-if="ability.can('manage', 'tests')">
         <q-tr :props="props">
@@ -57,7 +58,7 @@
             </q-popup-edit>
           </q-td>
           <q-td key="title" :props="props">
-            {{ props.row.title }}
+            {{ shortenText(props.row.title, 20) }}
             <q-popup-edit
               v-model="popupEditData.title"
               @show="() => setEditData(props.row)"
@@ -68,7 +69,7 @@
             </q-popup-edit>
           </q-td>
           <q-td key="authors" :props="props">
-            {{ props.row.authors }}
+            {{ shortenText(props.row.authors, 20) }}
             <q-popup-edit
               v-model="popupEditData.authors"
               @show="() => setEditData(props.row)"
@@ -78,7 +79,7 @@
               <q-input v-model="popupEditData.authors" dense autofocus />
             </q-popup-edit>
           </q-td>
-          <q-td key="category1" :props="props">
+          <!-- <q-td key="category1" :props="props">
             {{ props.row.category1 }}
             <q-popup-edit
               v-model="popupEditData.category1"
@@ -143,7 +144,7 @@
             >
               <q-input v-model="popupEditData.language" dense autofocus />
             </q-popup-edit>
-          </q-td>
+          </q-td> -->
         </q-tr>
       </template>
     </q-table>
@@ -182,7 +183,7 @@ export default class ItemTable extends Vue {
       required: true,
       label: "Title",
       align: "left",
-      field: (row: CatalogueItem) => row.title,
+      field: (row: CatalogueItem) => this.shortenText(row.title, 65),
       sortable: true,
       headerStyle: "max-width:10%",
       style: "max-width:10%; overflow-x:hidden;"
@@ -192,57 +193,57 @@ export default class ItemTable extends Vue {
       required: true,
       label: "Authors",
       align: "left",
-      field: (row: CatalogueItem) => row.authors,
-      sortable: true
-    },
-    {
-      name: "category1",
-      required: true,
-      label: "Category 1",
-      align: "left",
-      field: (row: CatalogueItem) => row.category1,
-      sortable: true
-    },
-    {
-      name: "category2",
-      required: true,
-      label: "Category 2",
-      align: "left",
-      field: (row: CatalogueItem) => row.category2,
-      sortable: true
-    },
-    {
-      name: "category3",
-      required: true,
-      label: "Category 3",
-      align: "left",
-      field: (row: CatalogueItem) => row.category3,
-      sortable: true
-    },
-    {
-      name: "category4",
-      required: true,
-      label: "Category 4",
-      align: "left",
-      field: (row: CatalogueItem) => row.category4,
-      sortable: true
-    },
-    {
-      name: "publisher",
-      required: true,
-      label: "Publisher",
-      align: "left",
-      field: (row: CatalogueItem) => row.publisher,
-      sortable: true
-    },
-    {
-      name: "language",
-      required: true,
-      label: "Language",
-      align: "left",
-      field: (row: CatalogueItem) => row.language,
+      field: (row: CatalogueItem) => this.shortenText(row.authors, 30),
       sortable: true
     }
+    // {
+    //   name: "category1",
+    //   required: true,
+    //   label: "Category 1",
+    //   align: "left",
+    //   field: (row: CatalogueItem) => row.category1,
+    //   sortable: true
+    // },
+    // {
+    //   name: "category2",
+    //   required: true,
+    //   label: "Category 2",
+    //   align: "left",
+    //   field: (row: CatalogueItem) => row.category2,
+    //   sortable: true
+    // },
+    // {
+    //   name: "category3",
+    //   required: true,
+    //   label: "Category 3",
+    //   align: "left",
+    //   field: (row: CatalogueItem) => row.category3,
+    //   sortable: true
+    // },
+    // {
+    //   name: "category4",
+    //   required: true,
+    //   label: "Category 4",
+    //   align: "left",
+    //   field: (row: CatalogueItem) => row.category4,
+    //   sortable: true
+    // },
+    // {
+    //   name: "publisher",
+    //   required: true,
+    //   label: "Publisher",
+    //   align: "left",
+    //   field: (row: CatalogueItem) => row.publisher,
+    //   sortable: true
+    // },
+    // {
+    //   name: "language",
+    //   required: true,
+    //   label: "Language",
+    //   align: "left",
+    //   field: (row: CatalogueItem) => row.language,
+    //   sortable: true
+    // }
   ];
   get allItems() {
     return catalogue.allItems;
@@ -250,8 +251,16 @@ export default class ItemTable extends Vue {
   get ability() {
     return user.ability;
   }
+  rowClick(row: CatalogueItem) {
+    this.$emit("select", row.itemID);
+  }
   saveChange() {
     catalogue.updateItem(this.popupEditData);
+  }
+  shortenText(text: string, maxLength: number) {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "…";
+    } else return text;
   }
   setEditData(data: CatalogueItem) {
     this.popupEditData = { ...data };
