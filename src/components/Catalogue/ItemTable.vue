@@ -30,9 +30,14 @@
         />
       </template>
 
-      <template v-slot:body="props" v-if="ability.can('manage', 'tests')">
+      <template v-slot:body="props">
         <q-tr :props="props">
-          <q-menu anchor="bottom left" self="top left" context-menu>
+          <q-menu
+            v-if="ability.can('manage', 'tests')"
+            anchor="bottom left"
+            self="top left"
+            context-menu
+          >
             <q-item v-close-popup clickable>
               <q-item-section @click="getQRCode(props.row, false)"
                 >Download QR Code</q-item-section
@@ -56,6 +61,7 @@
           <q-td key="ID" :props="props">
             {{ props.row.itemID }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.itemID"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -67,6 +73,7 @@
           <q-td key="abbreviation" :props="props">
             {{ props.row.abbreviation }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.abbreviation"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -78,6 +85,7 @@
           <q-td key="title" :props="props">
             {{ shortenText(props.row.title, 20) }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.title"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -87,19 +95,24 @@
             </q-popup-edit>
           </q-td>
           <q-td key="status" :props="props">
-            {{ shortenText(props.row.status, 20) }}
+            {{ statusMessage(props.row.status) }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.status"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
               buttons
             >
-              <q-input v-model="popupEditData.status" dense autofocus />
+              <q-option-group
+                v-model="popupEditData.status"
+                :options="statusOptions"
+              />
             </q-popup-edit>
           </q-td>
           <q-td key="authors" :props="props">
             {{ shortenText(props.row.authors, 20) }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.authors"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -111,6 +124,7 @@
           <q-td key="category1" :props="props">
             {{ props.row.category1 }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.category1"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -122,6 +136,7 @@
           <q-td key="category2" :props="props">
             {{ props.row.category2 }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.category2"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -133,6 +148,7 @@
           <q-td key="category3" :props="props">
             {{ props.row.category3 }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.category3"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -144,6 +160,7 @@
           <q-td key="category4" :props="props">
             {{ props.row.category4 }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.category4"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -155,6 +172,7 @@
           <q-td key="publisher" :props="props">
             {{ props.row.publisher }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.publisher"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -166,6 +184,7 @@
           <q-td key="language" :props="props">
             {{ props.row.language }}
             <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
               v-model="popupEditData.language"
               @show="() => setEditData(props.row)"
               @save="val => saveChange()"
@@ -182,7 +201,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { CatalogueItem } from "components/models";
+import { CatalogueItem, CatalogueStatus } from "components/models";
 import { catalogue, user } from "src/store/";
 import { emptyCatalogueItem } from "assets/ts/initFunctions";
 import { createTestLabel } from "assets/ts/pdfPrinter";
@@ -276,10 +295,32 @@ export default class ItemTable extends Vue {
       sortable: true
     }
   ];
-  visibleColumns = ["abbreviation", "title"];
-  get allItems() {
+  visibleColumns = ["ID", "abbreviation", "title", "status"];
+  get allItems(): CatalogueItem[] {
     return catalogue.allItems;
   }
+  statusOptions = [
+    {
+      value: CatalogueStatus.inStock,
+      label: "Available"
+    },
+    {
+      value: CatalogueStatus.withUser,
+      label: "With User"
+    },
+    {
+      value: CatalogueStatus.reserved,
+      label: "Reserved"
+    },
+    {
+      value: CatalogueStatus.withUserAndReserved,
+      label: "With User / Reserved"
+    },
+    {
+      value: CatalogueStatus.missing,
+      label: "Missing"
+    }
+  ];
   get ability() {
     return user.ability;
   }
@@ -296,7 +337,33 @@ export default class ItemTable extends Vue {
   }
   setEditData(data: CatalogueItem) {
     this.popupEditData = { ...data };
-    console.log(this.popupEditData);
+  }
+  statusMessage(status: CatalogueStatus): string {
+    let message = "Available";
+    switch (status) {
+      case CatalogueStatus.inStock:
+        message = "Available";
+        break;
+      case CatalogueStatus.withUser:
+        message = this.ability.can("manage", "tests")
+          ? "With User"
+          : "Not Available";
+        break;
+      case CatalogueStatus.reserved:
+        message = "Reserved";
+        break;
+      case CatalogueStatus.withUserAndReserved:
+        message = this.ability.can("manage", "tests")
+          ? "With User / Reserved"
+          : "Not Available";
+        break;
+      case CatalogueStatus.missing:
+        message = this.ability.can("manage", "tests")
+          ? "Missing"
+          : "Not Available";
+        break;
+    }
+    return message;
   }
   deleteItem(catalogueCounter: number) {
     catalogue
