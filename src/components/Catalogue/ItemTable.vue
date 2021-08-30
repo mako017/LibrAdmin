@@ -318,27 +318,23 @@ export default class ItemTable extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .sticky-header {
   height: 90vh;
 
   .q-table__top,
   .q-table__bottom,
   thead tr:first-child th {
-    background-color: hsla(100, 10%, 100%, 0.5);
+    background-color: hsla(0, 100%, 100%, 1);
   }
 
   thead tr th {
     position: sticky;
+    top: 0;
     z-index: 1;
   }
-  thead tr:first-child th {
-    top: 0;
-  }
 
-  /* this is when the loading indicator appears */
   &.q-table--loading thead tr:last-child th {
-    /* height of all previous header rows */
     top: 48px;
   }
 }
