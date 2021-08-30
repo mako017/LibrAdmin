@@ -9,7 +9,7 @@
       :visible-columns="visibleColumns"
       :rows-per-page-options="[0]"
       virtual-scroll
-      style="height: 90vh;"
+      class="sticky-header"
       row-key="name"
       @row-click="(evt, row, index) => rowClick(row)"
     >
@@ -318,4 +318,28 @@ export default class ItemTable extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.sticky-header {
+  height: 90vh;
+
+  .q-table__top,
+  .q-table__bottom,
+  thead tr:first-child th {
+    background-color: hsla(100, 10%, 100%, 0.5);
+  }
+
+  thead tr th {
+    position: sticky;
+    z-index: 1;
+  }
+  thead tr:first-child th {
+    top: 0;
+  }
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th {
+    /* height of all previous header rows */
+    top: 48px;
+  }
+}
+</style>
