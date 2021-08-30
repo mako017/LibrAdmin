@@ -16,14 +16,21 @@ export interface Catalogue {
   hash: string;
 }
 
+export enum CatalogueStatus {
+  inStock,
+  withUser,
+  reserved,
+  missing,
+  withUserAndReserved
+}
+
 export interface CatalogueItem {
   catalogueCounter?: number;
   itemID: string;
   abbreviation: string;
   title: string;
   authors: string;
-  status: 0 | 1 | 2;
-  //0 = avail.; 1 = out of stock; 2 = due
+  status: CatalogueStatus;
   currentlyWith?: string;
   due?: string;
   abstract?: string;
