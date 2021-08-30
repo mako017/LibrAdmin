@@ -20,8 +20,8 @@ export enum CatalogueStatus {
   inStock,
   withUser,
   reserved,
-  missing,
-  withUserAndReserved
+  withUserAndReserved,
+  missing
 }
 
 export interface CatalogueItem {
