@@ -131,6 +131,7 @@ import { CatalogueItem, serverResponse } from "../models";
 export default class ItemCreator extends Vue {
   prompt = true;
   catalogueItem: CatalogueItem = {
+    catalogueCounter: -1,
     itemID: "",
     abbreviation: "",
     title: "",

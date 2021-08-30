@@ -42,7 +42,12 @@ export default class Catalogue extends VuexModule {
       .then(response => {
         const data = response.data as serverResponse;
         if (data.call === "catalogueLoaded") {
-          this.setCatalogue(data.payload as CatalogueItem[]);
+          const newCatalogue = data.payload as CatalogueItem[];
+          newCatalogue.forEach(val => {
+            val.catalogueCounter = +val.catalogueCounter;
+            val.status = +val.status;
+          });
+          this.setCatalogue(newCatalogue);
         }
       })
       .catch(err => console.error(err));

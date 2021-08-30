@@ -25,7 +25,7 @@ export enum CatalogueStatus {
 }
 
 export interface CatalogueItem {
-  catalogueCounter?: number;
+  catalogueCounter: number;
   itemID: string;
   abbreviation: string;
   title: string;
