@@ -6,12 +6,30 @@
       title="Catalogue"
       :data="allItems"
       :columns="columns"
+      :visible-columns="visibleColumns"
       :rows-per-page-options="[0]"
       virtual-scroll
       style="height: 90vh;"
       row-key="name"
       @row-click="(evt, row, index) => rowClick(row)"
     >
+      <template v-slot:top>
+        <q-select
+          v-model="visibleColumns"
+          multiple
+          outlined
+          dense
+          options-dense
+          :display-value="$q.lang.table.columns"
+          emit-value
+          map-options
+          :options="columns"
+          option-value="name"
+          options-cover
+          style="min-width: 150px"
+        />
+      </template>
+
       <template v-slot:body="props" v-if="ability.can('manage', 'tests')">
         <q-tr :props="props">
           <q-menu anchor="bottom left" self="top left" context-menu>
@@ -68,6 +86,17 @@
               <q-input v-model="popupEditData.title" dense autofocus />
             </q-popup-edit>
           </q-td>
+          <q-td key="status" :props="props">
+            {{ shortenText(props.row.status, 20) }}
+            <q-popup-edit
+              v-model="popupEditData.status"
+              @show="() => setEditData(props.row)"
+              @save="val => saveChange()"
+              buttons
+            >
+              <q-input v-model="popupEditData.status" dense autofocus />
+            </q-popup-edit>
+          </q-td>
           <q-td key="authors" :props="props">
             {{ shortenText(props.row.authors, 20) }}
             <q-popup-edit
@@ -79,7 +108,7 @@
               <q-input v-model="popupEditData.authors" dense autofocus />
             </q-popup-edit>
           </q-td>
-          <!-- <q-td key="category1" :props="props">
+          <q-td key="category1" :props="props">
             {{ props.row.category1 }}
             <q-popup-edit
               v-model="popupEditData.category1"
@@ -144,7 +173,7 @@
             >
               <q-input v-model="popupEditData.language" dense autofocus />
             </q-popup-edit>
-          </q-td> -->
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -164,7 +193,6 @@ export default class ItemTable extends Vue {
   columns = [
     {
       name: "ID",
-      required: true,
       label: "Test ID",
       align: "left",
       field: (row: CatalogueItem) => row.itemID,
@@ -189,62 +217,66 @@ export default class ItemTable extends Vue {
       style: "max-width:10%; overflow-x:hidden;"
     },
     {
-      name: "authors",
+      name: "status",
       required: true,
+      label: "Status",
+      align: "left",
+      field: (row: CatalogueItem) => row.status,
+      sortable: true,
+      headerStyle: "max-width:10%",
+      style: "max-width:10%; overflow-x:hidden;"
+    },
+    {
+      name: "authors",
       label: "Authors",
       align: "left",
       field: (row: CatalogueItem) => this.shortenText(row.authors, 30),
       sortable: true
+    },
+    {
+      name: "category1",
+      label: "Category 1",
+      align: "left",
+      field: (row: CatalogueItem) => row.category1,
+      sortable: true
+    },
+    {
+      name: "category2",
+      label: "Category 2",
+      align: "left",
+      field: (row: CatalogueItem) => row.category2,
+      sortable: true
+    },
+    {
+      name: "category3",
+      label: "Category 3",
+      align: "left",
+      field: (row: CatalogueItem) => row.category3,
+      sortable: true
+    },
+    {
+      name: "category4",
+      label: "Category 4",
+      align: "left",
+      field: (row: CatalogueItem) => row.category4,
+      sortable: true
+    },
+    {
+      name: "publisher",
+      label: "Publisher",
+      align: "left",
+      field: (row: CatalogueItem) => row.publisher,
+      sortable: true
+    },
+    {
+      name: "language",
+      label: "Language",
+      align: "left",
+      field: (row: CatalogueItem) => row.language,
+      sortable: true
     }
-    // {
-    //   name: "category1",
-    //   required: true,
-    //   label: "Category 1",
-    //   align: "left",
-    //   field: (row: CatalogueItem) => row.category1,
-    //   sortable: true
-    // },
-    // {
-    //   name: "category2",
-    //   required: true,
-    //   label: "Category 2",
-    //   align: "left",
-    //   field: (row: CatalogueItem) => row.category2,
-    //   sortable: true
-    // },
-    // {
-    //   name: "category3",
-    //   required: true,
-    //   label: "Category 3",
-    //   align: "left",
-    //   field: (row: CatalogueItem) => row.category3,
-    //   sortable: true
-    // },
-    // {
-    //   name: "category4",
-    //   required: true,
-    //   label: "Category 4",
-    //   align: "left",
-    //   field: (row: CatalogueItem) => row.category4,
-    //   sortable: true
-    // },
-    // {
-    //   name: "publisher",
-    //   required: true,
-    //   label: "Publisher",
-    //   align: "left",
-    //   field: (row: CatalogueItem) => row.publisher,
-    //   sortable: true
-    // },
-    // {
-    //   name: "language",
-    //   required: true,
-    //   label: "Language",
-    //   align: "left",
-    //   field: (row: CatalogueItem) => row.language,
-    //   sortable: true
-    // }
   ];
+  visibleColumns = ["abbreviation", "title"];
   get allItems() {
     return catalogue.allItems;
   }
