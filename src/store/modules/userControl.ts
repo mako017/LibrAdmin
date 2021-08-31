@@ -7,7 +7,15 @@ import store from "..";
 export default class UserControl extends VuexModule {
   private readonly API_PATH = process.env.API_BASE_URL as string;
   private readonly API = "user.php";
-  private _users: UserAccount[] = [];
+  private _users: UserAccount[] = [
+    {
+      name: "Marco Koch",
+      email: "marco.koch@uni-saarland.de",
+      role: "admin",
+      borrowedMedia: [],
+      reservedMedia: []
+    }
+  ];
 
   get users() {
     return this._users;
@@ -33,8 +41,28 @@ export default class UserControl extends VuexModule {
       .catch(err => console.error(err));
   }
 
+  @Action
+  createUser() {
+    return;
+  }
+
+  @Action
+  updateUser(_updatedUser: UserAccount) {
+    return;
+  }
+
   @Mutation
   setUsers(users: UserAccount[]) {
     this._users = users;
+  }
+  @Mutation
+  setSingleUser({
+    updatedUser,
+    pos
+  }: {
+    updatedUser: UserAccount;
+    pos: number;
+  }) {
+    console.log({ updatedUser, pos });
   }
 }
