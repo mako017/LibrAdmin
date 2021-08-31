@@ -1,4 +1,4 @@
-import { CatalogueItem } from "src/components/models";
+import { CatalogueItem, UserAccount } from "src/components/models";
 
 export function emptyCatalogueItem(): CatalogueItem {
   return {
@@ -18,5 +18,15 @@ export function emptyCatalogueItem(): CatalogueItem {
     image: "",
     publisher: "",
     language: ""
+  };
+}
+
+export function emptyUser(): UserAccount {
+  return {
+    email: "",
+    name: "",
+    role: "guest",
+    borrowedMedia: [],
+    reservedMedia: []
   };
 }
