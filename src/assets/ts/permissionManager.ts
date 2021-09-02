@@ -26,6 +26,7 @@ export class PermissionManager {
         builder.can("read", "activeUser");
         builder.can("manage", "allUsers");
         builder.can("read", "allUsers");
+        builder.can("manage", "roles");
         builder.can("delete", "tests");
         builder.can("manage", "tests");
         builder.can("read", "tests");
