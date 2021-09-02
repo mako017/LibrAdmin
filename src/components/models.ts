@@ -31,16 +31,16 @@ export interface CatalogueItem {
   title: string;
   authors: string;
   status: CatalogueStatus;
-  currentlyWith?: string;
-  due?: string;
-  abstract?: string;
-  category1?: string;
-  category2?: string;
-  category3?: string;
-  category4?: string;
-  image?: string;
-  publisher?: string;
-  language?: string;
+  currentlyWith: string;
+  due: string;
+  abstract: string;
+  category1: string;
+  category2: string;
+  category3: string;
+  category4: string;
+  image: string;
+  publisher: string;
+  language: string;
 }
 
 export interface CategoryItem {
@@ -55,8 +55,8 @@ export interface UserAccount {
   email: string;
   role: userRoles;
   // token: string;
-  reservedMedia?: Array<string>;
-  borrowedMedia?: Array<string>;
+  reservedMedia: Array<string>;
+  borrowedMedia: Array<string>;
 }
 
 export type userRoles = "admin" | "mod" | "user" | "guest";
@@ -86,5 +86,10 @@ export interface ServerResponseUser {
 
 export type AppAbility = Ability<AbilityType>;
 export type Actions = "read" | "manage" | "delete";
-export type Subjects = "activeUser" | "allUsers" | "articles" | "tests";
+export type Subjects =
+  | "activeUser"
+  | "allUsers"
+  | "articles"
+  | "tests"
+  | "roles";
 export type AbilityType = [Actions, Subjects];

@@ -28,13 +28,17 @@ export default class UserControl extends VuexModule {
       .then(response => {
         const data = response.data as serverResponse;
         if (data.call === "success") {
-          const users = (<Array<UserAccount>>data.payload).map(user => {
-            return {
-              name: user.name,
-              email: user.email,
-              role: user.role
-            };
-          });
+          const users = (<Array<UserAccount>>data.payload).map(
+            (user): UserAccount => {
+              return {
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                reservedMedia: user.reservedMedia,
+                borrowedMedia: user.borrowedMedia
+              };
+            }
+          );
           this.setUsers(users);
         }
       })
