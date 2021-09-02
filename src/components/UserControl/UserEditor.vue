@@ -1,55 +1,98 @@
 <template>
-  <q-card class="override q-pa-md">
-    <q-form>
-      <q-card-section>
-        <q-input class="q-mb-xs" filled label="User Name" type="text"></q-input>
-        <q-input class="q-mb-xs" filled label="E-Mail" type="email"></q-input>
-        <q-option-group :options="statusOptions"></q-option-group>
-      </q-card-section>
-      <q-card-section class="flex column">
-        <span class="text-h6">Borrowed Media</span>
-        <div class="flex wrap">
-          Nothing here
-        </div>
-        <q-chip
-          class="q-ml-auto"
-          color="primary"
-          text-color="white"
-          icon="add_circle_outline"
-          label="Add entry"
-        />
-      </q-card-section>
-      <q-card-section class="flex column">
-        <span class="text-h6">Reserved Media</span>
-        <div class="flex wrap">
-          Nothing here
-        </div>
-        <q-chip
-          class="q-ml-auto"
-          color="primary"
-          text-color="white"
-          icon="add_circle_outline"
-          label="Add entry"
-        />
-      </q-card-section>
-      <div class="flex justify-between">
-        <q-btn color="red" text-color="white" label="Cancel" />
-        <q-btn color="primary" text-color="white" label="Update" />
-      </div>
-    </q-form>
-  </q-card>
+  <q-dialog v-model="showDialog" persistent>
+    <q-card class="override">
+      <q-form>
+        <q-card-section>
+          <q-input
+            class="q-mb-xs"
+            filled
+            label="User Name"
+            type="text"
+            v-model="editUser.name"
+          ></q-input>
+          <q-input
+            class="q-mb-xs"
+            filled
+            label="E-Mail"
+            type="email"
+            v-model="editUser.email"
+          ></q-input>
+          <q-option-group
+            :options="statusOptions"
+            v-model="editUser.role"
+          ></q-option-group>
+        </q-card-section>
+        <q-card-section class="flex column">
+          <span class="text-h6">Borrowed Media</span>
+          <div class="flex wrap">
+            <span v-if="editUser.borrowedMedia.length === 0">Nothing here</span>
+          </div>
+          <q-chip
+            class="q-ml-auto"
+            color="primary"
+            text-color="white"
+            icon="add_circle_outline"
+            label="Add entry"
+            clickable
+            @click="showSelector = true"
+          />
+        </q-card-section>
+        <q-card-section class="flex column">
+          <span class="text-h6">Reserved Media</span>
+          <div class="flex wrap">
+            <span v-if="editUser.reservedMedia.length === 0">Nothing here</span>
+          </div>
+          <q-chip
+            class="q-ml-auto"
+            color="primary"
+            text-color="white"
+            icon="add_circle_outline"
+            label="Add entry"
+            clickable
+            @click="showSelector = true"
+          />
+        </q-card-section>
+        <q-separator class="q-mb-sm" />
+        <q-card-section class="flex justify-between q-pa-sm">
+          <q-btn
+            color="red"
+            text-color="white"
+            label="Cancel"
+            @click="closeDialog()"
+          />
+          <q-btn
+            color="primary"
+            text-color="white"
+            label="Update"
+            @click="updateUser()"
+          />
+        </q-card-section>
+      </q-form>
+    </q-card>
+    <MediaSelector
+      v-if="showSelector"
+      @closeDialog="showSelector = false"
+      :user="editUser"
+    />
+  </q-dialog>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { userRoles } from "../models";
+import { user, userControl } from "src/store";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { UserAccount, userRoles } from "../models";
+import MediaSelector from "src/components/UserControl/MediaSelector.vue";
 
-@Component
+@Component({ components: { MediaSelector } })
 export default class UserEditor extends Vue {
-  statusOptions: { value: userRoles; label: string }[] = [
+  showDialog = true;
+  showSelector = false;
+  @Prop({ required: true }) editUser!: UserAccount;
+  statusOptions: { value: userRoles; label: string; disable?: boolean }[] = [
     {
       value: "admin",
-      label: "Admin"
+      label: "Admin",
+      disable: user.ability.cannot("manage", "roles")
     },
     {
       value: "mod",
@@ -64,6 +107,14 @@ export default class UserEditor extends Vue {
       label: "Guest"
     }
   ];
+  closeDialog() {
+    this.$emit("closeDialog");
+    this.showDialog = false;
+  }
+  updateUser() {
+    userControl.updateUser(this.editUser);
+    this.closeDialog();
+  }
 }
 </script>
 

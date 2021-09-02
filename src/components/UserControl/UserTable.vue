@@ -10,7 +10,9 @@
         <q-tr :props="props">
           <q-menu anchor="bottom left" self="top left" context-menu>
             <q-item v-close-popup clickable>
-              <q-item-section>Edit User</q-item-section>
+              <q-item-section @click="openDialog(props.row)"
+                >Edit User</q-item-section
+              >
             </q-item>
           </q-menu>
           <q-td key="name" :props="props">
@@ -58,7 +60,11 @@
         </q-tr>
       </template>
     </q-table>
-    <UserEditor />
+    <UserEditor
+      v-if="showDialog"
+      @closeDialog="showDialog = false"
+      :editUser="popupEditData"
+    />
   </div>
 </template>
 
@@ -72,6 +78,7 @@ import UserEditor from "src/components/UserControl/UserEditor.vue";
 @Component({ components: { UserEditor } })
 export default class UserTable extends Vue {
   popupEditData: UserAccount = emptyUser();
+  showDialog = false;
   columns = [
     {
       name: "name",
@@ -117,6 +124,11 @@ export default class UserTable extends Vue {
   }
   setEditData(data: UserAccount) {
     this.popupEditData = { ...data };
+  }
+  openDialog(user: UserAccount) {
+    this.setEditData(user);
+    this.showDialog = true;
+    console.log(this.showDialog);
   }
 }
 </script>
