@@ -17,7 +17,9 @@
           </template>
         </q-list>
         <q-list @dragover.prevent @dragenter.prevent @drop="drop($event)">
-          <q-item-label header>Borrowed Tests</q-item-label>
+          <q-item-label header>{{
+            targetList === "borrowed" ? "Borrowed Media" : "Reserved Media"
+          }}</q-item-label>
           <template v-for="item in userMedia">
             <q-item
               clickable
@@ -42,7 +44,7 @@
           color="primary"
           text-color="white"
           label="Update"
-          @click="saveSelection()"
+          @click="saveDialog()"
         />
       </q-card-section>
     </q-card>
@@ -50,28 +52,49 @@
 </template>
 
 <script lang="ts">
-import { emptyCatalogueItem } from "src/assets/ts/initFunctions";
+import { emptyUser } from "src/assets/ts/initFunctions";
 import { catalogue } from "src/store";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { CatalogueItem, UserAccount } from "../models";
+import {
+  CatalogueItem,
+  CatalogueStatus,
+  itemChange,
+  UserAccount
+} from "../models";
 
 @Component
 export default class MediaSelector extends Vue {
-  targetList: "borrowed" | "reserved" = "borrowed";
+  @Prop() targetList!: "borrowed" | "reserved";
   @Prop() user!: UserAccount;
-  mockitem = emptyCatalogueItem();
+  userCopy = emptyUser();
   showDialog = true;
+  changedItems: itemChange[] = [];
 
   get allMedia() {
     return catalogue.allItems.filter(item => {
-      return !this.user.borrowedMedia.some(uMedia => {
-        return uMedia === item.itemID;
-      });
+      if (
+        item.status === CatalogueStatus.inStock ||
+        item.status === CatalogueStatus.reserved
+      ) {
+        if (this.targetList === "borrowed") {
+          return !this.userCopy.borrowedMedia.some(uMedia => {
+            return uMedia === item.itemID;
+          });
+        }
+        return !this.userCopy.reservedMedia.some(uMedia => {
+          return uMedia === item.itemID;
+        });
+      }
     });
   }
   get userMedia() {
     return catalogue.allItems.filter(item => {
-      return this.user.borrowedMedia.some(uMedia => {
+      if (this.targetList === "borrowed") {
+        return this.userCopy.borrowedMedia.some(uMedia => {
+          return uMedia === item.itemID;
+        });
+      }
+      return this.userCopy.reservedMedia.some(uMedia => {
         return uMedia === item.itemID;
       });
     });
@@ -87,14 +110,41 @@ export default class MediaSelector extends Vue {
 
   drop(ev: DragEvent) {
     const itemID = ev.dataTransfer?.getData("itemID");
+    if (itemID) {
+      if (this.targetList === "borrowed") {
+        this.userCopy.borrowedMedia.push(itemID);
+      } else {
+        this.userCopy.reservedMedia.push(itemID);
+      }
+      const item = catalogue.hasItem(itemID);
+
+      item
+        .then(res => {
+          if (res) {
+            if (this.targetList === "borrowed")
+              this.changedItems.push([res, "borrow"]);
+            else this.changedItems.push([res, "reserve"]);
+          }
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   closeDialog() {
     this.$emit("closeDialog");
     this.showDialog = false;
   }
-  saveSelection() {
-    console.log("Saving...");
+
+  saveDialog() {
+    this.$emit("saveDialog", {
+      changedItems: this.changedItems,
+      userCopy: this.userCopy
+    });
+    this.showDialog = false;
+  }
+
+  beforeMount() {
+    this.userCopy = JSON.parse(JSON.stringify(this.user)) as UserAccount;
   }
 }
 </script>
