@@ -27,7 +27,12 @@ switch ($requestMethod) {
         $userGateway->signup($user);
         break;
     case 'PUT':
-        $user = new User("test","user");
+        $name = isset($payload["name"]) ? $payload["name"] : "";
+        $email = isset($payload["email"]) ? $payload["email"] : "";
+        $role = isset($payload["role"]) ? $payload["role"] : "";
+        $borrowedMedia = isset($payload["borrowedMedia"]) ? $payload["borrowedMedia"] : "";
+        $reservedMedia = isset($payload["reservedMedia"]) ? $payload["reservedMedia"] : "";
+        $user = new User($name, "" ,$email,$role, $borrowedMedia, $reservedMedia);
         $userGateway->updateUser($user);
         break;
     case 'DELETE':
