@@ -17,12 +17,16 @@ interface dbUserAccount {
 }
 
 function dbToUser(dbUser: dbUserAccount): UserAccount {
+  const reservedMedia =
+    dbUser.reservedMedia === "" ? [] : dbUser.reservedMedia.split(";");
+  const borrowedMedia =
+    dbUser.borrowedMedia === "" ? [] : dbUser.borrowedMedia.split(";");
   return {
     name: dbUser.name,
     email: dbUser.email,
     role: dbUser.role,
-    reservedMedia: dbUser.reservedMedia.split(";"),
-    borrowedMedia: dbUser.borrowedMedia.split(";")
+    reservedMedia: reservedMedia,
+    borrowedMedia: borrowedMedia
   };
 }
 
