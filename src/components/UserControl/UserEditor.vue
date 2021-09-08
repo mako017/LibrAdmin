@@ -163,17 +163,7 @@ export default class UserEditor extends Vue {
   }
   removeMedia(media: CatalogueItem, targetList: TargetList) {
     const targetsBorrowed = targetList === "borrow";
-    if (targetsBorrowed) {
-      if (media.status === CatalogueStatus.withUser)
-        media.status = CatalogueStatus.inStock;
-      else if (media.status === CatalogueStatus.withUserAndReserved)
-        media.status = CatalogueStatus.reserved;
-    } else {
-      if (media.status === CatalogueStatus.reserved)
-        media.status = CatalogueStatus.inStock;
-      else if (media.status === CatalogueStatus.withUserAndReserved)
-        media.status = CatalogueStatus.withUser;
-    }
+    this.changedItems.push([{ ...media }, "remove"]);
     const itemIndex = targetsBorrowed
       ? this.userCopy.borrowedMedia.indexOf(media.itemID)
       : this.userCopy.reservedMedia.indexOf(media.itemID);
