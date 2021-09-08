@@ -1,11 +1,6 @@
 <template>
   <div class="col">
-    <q-table
-      title="User Panel"
-      :data="mockdata"
-      :columns="columns"
-      row-key="name"
-    >
+    <q-table title="User Panel" :data="users" :columns="columns" row-key="name">
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-menu anchor="bottom left" self="top left" context-menu>
@@ -115,9 +110,11 @@ export default class UserTable extends Vue {
       sortable: true
     }
   ];
-  mockdata = userControl.users;
   get ability() {
     return user.ability;
+  }
+  get users() {
+    return userControl.users;
   }
   saveChange() {
     userControl.updateUser(this.popupEditData);
