@@ -18,7 +18,7 @@
         </q-list>
         <q-list @dragover.prevent @dragenter.prevent @drop="drop($event)">
           <q-item-label header>{{
-            targetList === "borrowed" ? "Borrowed Media" : "Reserved Media"
+            targetList === "borrow" ? "Borrowed Media" : "Reserved Media"
           }}</q-item-label>
           <template v-for="item in userMedia">
             <q-item
@@ -58,17 +58,18 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import {
   CatalogueItem,
   CatalogueStatus,
-  itemChange,
+  ItemChange,
+  TargetList,
   UserAccount
 } from "../models";
 
 @Component
 export default class MediaSelector extends Vue {
-  @Prop() targetList!: "borrowed" | "reserved";
+  @Prop() targetList!: TargetList;
   @Prop() user!: UserAccount;
   userCopy = emptyUser();
   showDialog = true;
-  changedItems: itemChange[] = [];
+  changedItems: ItemChange[] = [];
 
   get allMedia() {
     return catalogue.allItems.filter(item => {
@@ -76,7 +77,7 @@ export default class MediaSelector extends Vue {
         item.status === CatalogueStatus.inStock ||
         item.status === CatalogueStatus.reserved
       ) {
-        if (this.targetList === "borrowed") {
+        if (this.targetList === "borrow") {
           return !this.userCopy.borrowedMedia.some(uMedia => {
             return uMedia === item.itemID;
           });
@@ -89,7 +90,7 @@ export default class MediaSelector extends Vue {
   }
   get userMedia() {
     return catalogue.allItems.filter(item => {
-      if (this.targetList === "borrowed") {
+      if (this.targetList === "borrow") {
         return this.userCopy.borrowedMedia.some(uMedia => {
           return uMedia === item.itemID;
         });
@@ -111,7 +112,7 @@ export default class MediaSelector extends Vue {
   drop(ev: DragEvent) {
     const itemID = ev.dataTransfer?.getData("itemID");
     if (itemID) {
-      if (this.targetList === "borrowed") {
+      if (this.targetList === "borrow") {
         this.userCopy.borrowedMedia.push(itemID);
       } else {
         this.userCopy.reservedMedia.push(itemID);
@@ -121,7 +122,7 @@ export default class MediaSelector extends Vue {
       item
         .then(res => {
           if (res) {
-            if (this.targetList === "borrowed")
+            if (this.targetList === "borrow")
               this.changedItems.push([res, "borrow"]);
             else this.changedItems.push([res, "reserve"]);
           }

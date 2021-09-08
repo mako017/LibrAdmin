@@ -93,3 +93,5 @@ export type Subjects =
   | "tests"
   | "roles";
 export type AbilityType = [Actions, Subjects];
+export type TargetList = "borrow" | "reserve" | "remove";
+export type ItemChange = [CatalogueItem, TargetList];
