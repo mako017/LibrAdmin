@@ -1,11 +1,17 @@
 <template>
   <q-dialog persistent v-model="showDialog">
-    <q-card>
+    <q-card class="mediaSelectorCard">
       <q-card-section class="flex row">
-        <q-list @dragover.prevent @dragenter.prevent @drop="drop($event)">
+        <q-list
+          class="q-list"
+          @dragover.prevent
+          @dragenter.prevent
+          @drop="drop($event)"
+        >
           <q-item-label header>Catalogue</q-item-label>
           <template v-for="item in allMedia">
             <q-item
+              class="q-item"
               clickable
               draggable="true"
               v-ripple
@@ -16,12 +22,18 @@
             </q-item>
           </template>
         </q-list>
-        <q-list @dragover.prevent @dragenter.prevent @drop="drop($event)">
+        <q-list
+          class="q-list"
+          @dragover.prevent
+          @dragenter.prevent
+          @drop="drop($event)"
+        >
           <q-item-label header>{{
             targetList === "borrow" ? "Borrowed Media" : "Reserved Media"
           }}</q-item-label>
           <template v-for="item in userMedia">
             <q-item
+              class="q-item"
               clickable
               draggable="true"
               v-ripple
@@ -153,4 +165,18 @@ export default class MediaSelector extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.mediaSelectorCard {
+  min-width: 20%;
+  .q-list {
+    width: 48%;
+    margin: 0 auto;
+  }
+  .q-item {
+    border: 1px solid #bbb;
+    border-radius: 25px;
+    padding: 4px 16px;
+    margin: 2px 0;
+  }
+}
+</style>
