@@ -43,15 +43,17 @@ function userToDb(user: UserAccount): dbUserAccount {
 export default class UserControl extends VuexModule {
   private readonly API_PATH = process.env.API_BASE_URL as string;
   private readonly API = "user.php";
-  private _users: UserAccount[] = [
-    // {
-    //   name: "Marco Koch",
-    //   email: "marco.koch@uni-saarland.de",
-    //   role: "admin",
-    //   borrowedMedia: [],
-    //   reservedMedia: []
-    // }
-  ];
+  private _users: UserAccount[] = process.env.DEV
+    ? [
+        {
+          name: "Marco Koch",
+          email: "marco.koch@uni-saarland.de",
+          role: "admin",
+          borrowedMedia: [],
+          reservedMedia: []
+        }
+      ]
+    : [];
 
   get users() {
     return this._users;
