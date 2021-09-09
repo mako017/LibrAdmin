@@ -32,8 +32,6 @@ export default class LoginForm extends Vue {
     this.$emit("submitted", response);
     response
       .then(response => {
-        console.log(response);
-
         const data = response.data;
         if (data.call === "login") {
           const userdata = data.payload as ServerResponseUser;

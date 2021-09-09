@@ -60,7 +60,7 @@ export default class User extends VuexModule {
           this.updateAbilities();
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   }
 
   @Action

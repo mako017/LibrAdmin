@@ -70,7 +70,6 @@ export default class UserControl extends VuexModule {
             }
           );
           this.setUsers(users);
-          console.log(this._users);
         }
       })
       .catch(err => console.error(err));

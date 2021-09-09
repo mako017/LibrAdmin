@@ -29,8 +29,6 @@ export default class Catalogue extends VuexModule {
   hasItem(itemID: string): Promise<CatalogueItem | undefined> {
     return new Promise(resolve => {
       const index = this._allItems.findIndex(el => el.itemID === itemID);
-      console.log(index);
-
       resolve(index === -1 ? undefined : this._allItems[index]);
     });
   }

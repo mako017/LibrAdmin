@@ -125,7 +125,6 @@ export default class UserTable extends Vue {
   openDialog(user: UserAccount) {
     this.setEditData(user);
     this.showDialog = true;
-    console.log(this.showDialog);
   }
 }
 </script>
