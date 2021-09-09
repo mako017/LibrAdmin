@@ -146,6 +146,9 @@ export default class MediaSelector extends Vue {
 
   beforeMount() {
     this.userCopy = JSON.parse(JSON.stringify(this.user)) as UserAccount;
+    if (catalogue.allItems.length === 0) {
+      catalogue.queryCatalogue().catch(err => console.error(err));
+    }
   }
 }
 </script>
