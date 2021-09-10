@@ -24,6 +24,13 @@ export enum CatalogueStatus {
   missing
 }
 
+export enum QrActions {
+  return,
+  reserve,
+  borrow,
+  inspect
+}
+
 export interface CatalogueItem {
   catalogueCounter: number;
   itemID: string;
