@@ -1,5 +1,5 @@
 import { RouteConfig } from "vue-router";
-import { catalogue, user } from "src/store/index";
+import { catalogue, user, userControl } from "src/store/index";
 
 const routes: RouteConfig[] = [
   {
@@ -42,7 +42,21 @@ const routes: RouteConfig[] = [
   {
     path: "/qrscanner",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/QR.vue") }]
+    children: [
+      {
+        path: "",
+        beforeEnter(to, from, next) {
+          void userControl.queryUsers();
+          catalogue
+            .queryCatalogue()
+            .then(() => {
+              next();
+            })
+            .catch(_err => next());
+        },
+        component: () => import("pages/QR.vue")
+      }
+    ]
   },
   {
     path: "/login",
