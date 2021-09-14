@@ -41,3 +41,51 @@ export function returnItem(item: CatalogueItem | string) {
     }
   }
 }
+
+export function borrowItem(
+  item: CatalogueItem | string,
+  user: UserAccount | string
+) {
+  let updatedUser: UserAccount | undefined;
+  let updatedItem: CatalogueItem | undefined;
+  if (typeof user === "string") {
+    updatedUser = getNamedUser(user);
+  }
+  if (typeof item === "string") {
+    updatedItem = getItemWithId(item);
+  }
+
+  if (updatedUser && updatedItem) {
+    updatedItem.status = CatalogueStatus.withUser;
+    updatedItem.currentlyWith = updatedUser.name;
+    catalogue.updateItem(updatedItem);
+
+    updatedUser.borrowedMedia.push(updatedItem.itemID);
+    userControl.updateUser(updatedUser);
+  }
+}
+
+export function reserveItem(
+  item: CatalogueItem | string,
+  user: UserAccount | string
+) {
+  let updatedUser: UserAccount | undefined;
+  let updatedItem: CatalogueItem | undefined;
+  if (typeof user === "string") {
+    updatedUser = getNamedUser(user);
+  }
+  if (typeof item === "string") {
+    updatedItem = getItemWithId(item);
+  }
+
+  if (updatedUser && updatedItem) {
+    if (updatedItem.status === CatalogueStatus.withUser) {
+      updatedItem.status = CatalogueStatus.withUserAndReserved;
+    } else updatedItem.status = CatalogueStatus.reserved;
+    updatedItem.currentlyWith = updatedUser.name;
+    catalogue.updateItem(updatedItem);
+
+    updatedUser.borrowedMedia.push(updatedItem.itemID);
+    userControl.updateUser(updatedUser);
+  }
+}
