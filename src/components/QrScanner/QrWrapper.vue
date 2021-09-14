@@ -31,6 +31,9 @@ export default class QrWrapper extends Vue {
       void this.qrScanner.start();
     }
   }
+  beforeDestroy() {
+    this.qrScanner?.stop();
+  }
 }
 </script>
 
