@@ -63,3 +63,92 @@ export function createTestLabel(test: CatalogueItem, print = false) {
   }
   pdfMake.createPdf(docDefinition).download(test.abbreviation);
 }
+
+export function createContract() {
+  const docDefinition: TDocumentDefinitions = {
+    pageSize: "A4",
+    pageMargins: [10, 10],
+    info: {
+      title: "Ausleihschein",
+      author: "LibrAdmin"
+    },
+    header: {
+      columns: [
+        {
+          image: "eule",
+          alignment: "left",
+          width: 80,
+          margin: [35, 4, 0, 0]
+        },
+        {
+          text: "FAKULTÄT HW\nFACHRICHTUNG PSYCHOLOGIE\nTESTOTHEK",
+          color: "#004877",
+          fontSize: 10,
+          bold: true,
+          alignment: "right",
+          margin: [0, 4, 35, 0]
+        }
+      ]
+    },
+    content: [
+      {
+        text: "Ausleihschein",
+        alignment: "center",
+        fontSize: 16,
+        bold: true,
+        margin: [0, 20]
+      },
+      {
+        columns: [
+          {
+            table: {
+              body: [
+                [{ text: "Pers. Daten", bold: true, colSpan: 2 }, {}],
+                ["Name:", "Max Mustermann"],
+                ["E-Mail:", "m.muster@m.mustermann.de"],
+                ["Benutzername:", "mamu01"]
+              ]
+            },
+            layout: "lightHorizontalLines"
+          },
+          {
+            table: {
+              body: [
+                [{ text: "Bearbeitet von", bold: true, colSpan: 2 }, {}],
+                ["Name:", "Max Mustermann"],
+                ["E-Mail:", "m.muster@m.mustermann.de"]
+              ]
+            },
+            layout: "lightHorizontalLines",
+            margin: [10, 0, 0, 0]
+          }
+        ]
+      },
+      {
+        text: "Ausgeliehene Tests:",
+        bold: true,
+        margin: [0, 10, 0, 10]
+      },
+      {
+        ul: ["Test 1", "Test 2", "Test 3"]
+      },
+      {
+        text:
+          "Hiermit bestätige ich, dass ich die oben genannten Tests ausgeliehen habe und spätestens am DD.MM.YYYY vollständig und unbeschädigt zurückbringe.",
+        alignment: "justify",
+        margin: [0, 10]
+      },
+      {
+        text: "Saarbrücken, den DD.MM.YYYY",
+        decoration: "overline",
+        alignment: "right",
+        margin: [0, 50, 0, 0]
+      }
+    ],
+    images: {
+      eule:
+        "https://upload.wikimedia.org/wikipedia/de/thumb/b/bc/Logo-Universit%C3%A4t_des_Saarlandes.svg/200px-Logo-Universit%C3%A4t_des_Saarlandes.svg.png"
+    }
+  };
+  pdfMake.createPdf(docDefinition).download("contract");
+}
