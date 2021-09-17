@@ -15,6 +15,7 @@ export function emptyCatalogueItem(): CatalogueItem {
     category2: "",
     category3: "",
     category4: "",
+    storageCode: "",
     image: "",
     publisher: "",
     language: ""

@@ -15,6 +15,7 @@ class CatalogueItem{
     public $category2 = "";
     public $category3 = "";
     public $category4 = "";
+    public $storageCode = "";
     public $image = "";
     public $publisher = "";
     public $language = "";
@@ -34,6 +35,7 @@ class CatalogueItem{
             $this->category2 = $row["category2"];
             $this->category3 = $row["category3"];
             $this->category4 = $row["category4"];
+            $this->storageCode = $row["storageCode"];
             $this->image = $row["image"];
             $this->publisher = $row["publisher"];
             $this->language = $row["language"];
@@ -55,6 +57,7 @@ class CatalogueItem{
         $this->category2 = $payload["category2"];
         $this->category3 = $payload["category3"];
         $this->category4 = $payload["category4"];
+        $this->storageCode = $payload["storageCode"];
         $this->image = $payload["image"];
         $this->publisher = $payload["publisher"];
         $this->language = $payload["language"];
@@ -82,6 +85,7 @@ class CatalogueGateway{
             "category2"=> $item->category2,
             "category3"=> $item->category3,
             "category4"=> $item->category4,
+            "storageCode"=> $item->storageCode,
             "image"=> $item->image,
             "publisher"=> $item->publisher,
             "language"=> $item->language
@@ -123,6 +127,7 @@ class CatalogueGateway{
             "category2"=> $item->category2,
             "category3"=> $item->category3,
             "category4"=> $item->category4,
+            "storageCode"=> $item->storageCode,
             "image"=> $item->image,
             "publisher"=> $item->publisher,
             "language"=> $item->language

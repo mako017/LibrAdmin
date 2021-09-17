@@ -144,6 +144,7 @@ export default class ItemCreator extends Vue {
     category2: "",
     category3: "",
     category4: "",
+    storageCode:"",
     image: "",
     publisher: "",
     language: ""

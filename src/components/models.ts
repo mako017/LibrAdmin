@@ -45,6 +45,7 @@ export interface CatalogueItem {
   category2: string;
   category3: string;
   category4: string;
+  storageCode: string;
   image: string;
   publisher: string;
   language: string;

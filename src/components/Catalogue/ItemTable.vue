@@ -169,6 +169,18 @@
               <q-input v-model="popupEditData.category4" dense autofocus />
             </q-popup-edit>
           </q-td>
+          <q-td key="storageCode" :props="props">
+            {{ props.row.storageCode }}
+            <q-popup-edit
+              v-if="ability.can('manage', 'tests')"
+              v-model="popupEditData.storageCode"
+              @show="() => setEditData(props.row)"
+              @save="val => saveChange()"
+              buttons
+            >
+              <q-input v-model="popupEditData.storageCode" dense autofocus />
+            </q-popup-edit>
+          </q-td>
           <q-td key="publisher" :props="props">
             {{ props.row.publisher }}
             <q-popup-edit
@@ -281,6 +293,13 @@ export default class ItemTable extends Vue {
       sortable: true
     },
     {
+      name: "storageCode",
+      label: "Storage Location",
+      align: "left",
+      field: (row: CatalogueItem) => row.storageCode,
+      sortable: true
+    },
+    {
       name: "publisher",
       label: "Publisher",
       align: "left",
@@ -295,7 +314,9 @@ export default class ItemTable extends Vue {
       sortable: true
     }
   ];
-  visibleColumns = ["ID", "abbreviation", "title", "status"];
+  visibleColumns = this.ability.can("manage", "tests")
+    ? ["ID", "abbreviation", "title", "status", "storageCode"]
+    : ["ID", "abbreviation", "title", "status"];
   get allItems(): CatalogueItem[] {
     return catalogue.allItems;
   }

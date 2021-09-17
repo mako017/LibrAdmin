@@ -64,6 +64,15 @@
       </q-input>
       <q-input
         readonly
+        class="q-mb-xs"
+        filled
+        :value="item.storageCode"
+        label="Storage Location"
+        type="text"
+      >
+      </q-input>
+      <q-input
+        readonly
         filled
         class="q-mb-xs"
         :value="item.publisher"

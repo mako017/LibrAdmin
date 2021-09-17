@@ -31,6 +31,7 @@ export default class App extends Vue {
           category2: "",
           category3: "",
           category4: "",
+          storageCode: "",
           image: "",
           publisher: "",
           language: ""
@@ -49,6 +50,7 @@ export default class App extends Vue {
           category2: "",
           category3: "",
           category4: "",
+          storageCode: "",
           image: "",
           publisher: "",
           language: ""
@@ -67,6 +69,7 @@ export default class App extends Vue {
           category2: "",
           category3: "",
           category4: "",
+          storageCode: "",
           image: "",
           publisher: "",
           language: ""
