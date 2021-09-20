@@ -40,7 +40,6 @@ export default class QrWrapper extends Vue {
 <style scoped>
 video {
   width: 300px;
-  height: 300px;
   max-width: 90vmin;
   max-height: 90vmin;
   margin: 1rem auto;
