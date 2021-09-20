@@ -1,7 +1,7 @@
 <template>
   <q-card class="qcard override">
     <q-card-section>
-      <div class="text-h6">DESIGMA</div>
+      <div class="text-h6">{{item.abbreviation}}</div>
     </q-card-section>
     <q-card-section class="q-pt-none column">
       <span class="text-subtitle2">Test</span>
