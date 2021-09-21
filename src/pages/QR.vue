@@ -13,6 +13,10 @@
     />
     <QrWrapper @scanned="setContent" />
     {{ qrContent }}
+    <div v-if="showStorageSelector" class="row">
+      <CharacterMenu @update="setStorageCol($event)" isText />
+      <CharacterMenu @update="setStorageRow($event)" :isText="false" />
+    </div>
   </q-page>
 </template>
 
@@ -20,6 +24,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import QrWrapper from "components/QrScanner/QrWrapper.vue";
 import QrActionSelector from "components/QrScanner/QrActionSelector.vue";
+import CharacterMenu from "components/QrScanner/CharacterMenu.vue";
 import { QrActions } from "src/components/models";
 import {
   borrowItem,
@@ -29,10 +34,11 @@ import {
 import { Dialog } from "quasar";
 import { user, userControl } from "src/store";
 
-@Component({ components: { QrWrapper, QrActionSelector } })
+@Component({ components: { QrWrapper, QrActionSelector, CharacterMenu } })
 export default class QR extends Vue {
   qrContent = "";
   qrAction: QrActions = QrActions.inspect;
+  storageLoc: [string, string] = ["A", "1"];
   get ability() {
     return user.ability;
   }
@@ -46,6 +52,9 @@ export default class QR extends Vue {
     ) {
       return true;
     } else return false;
+  }
+  get showStorageSelector(): boolean {
+    return this.qrAction === QrActions.return ? true : false;
   }
   selectedUser = "";
 
@@ -73,6 +82,12 @@ export default class QR extends Vue {
     }
     if (this.qrAction === QrActions.return && this.qrContent) {
     }
+  }
+  setStorageCol(val: string) {
+    this.storageLoc = [val, this.storageLoc[1]];
+  }
+  setStorageRow(val: string) {
+    this.storageLoc = [this.storageLoc[0], val];
   }
   returnMedia(mediaID: string) {
     Dialog.create({
